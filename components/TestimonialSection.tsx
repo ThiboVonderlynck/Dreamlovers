@@ -11,7 +11,6 @@ const TestimonialSection = () => {
       id: 1,
       name: "Sarah & Michael",
       location: "Tuscany Wedding",
-      content: "Dreamlovers captured our wedding day in the most beautiful way. The film brings back all the emotions and joy we felt. We can't stop watching it!",
       content: "Dreamlovers heeft onze trouwdag op de mooiste manier vastgelegd. De film brengt alle emoties en vreugde terug die we voelden. We kunnen er niet mee stoppen met kijken!",
       rating: 5,
       image: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=150&h=150"
@@ -20,7 +19,6 @@ const TestimonialSection = () => {
       id: 2,
       name: "Emma & James",
       location: "Mountain Ceremony",
-      content: "The attention to detail and the way they captured our intimate moments was incredible. Our film is a true work of art that we'll treasure forever.",
       content: "De aandacht voor detail en de manier waarop ze onze intieme momenten vastlegden was ongelooflijk. Onze film is een waar kunstwerk dat we voor altijd zullen koesteren.",
       rating: 5,
       image: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=150&h=150"
@@ -29,7 +27,6 @@ const TestimonialSection = () => {
       id: 3,
       name: "Lisa & David",
       location: "Garden Party Wedding",
-      content: "Professional, creative, and so easy to work with. They made us feel comfortable and the result exceeded all our expectations. Highly recommend!",
       content: "Professioneel, creatief en zo makkelijk om mee te werken. Ze zorgden ervoor dat we ons op ons gemak voelden en het resultaat overtrof al onze verwachtingen. Zeer aan te bevelen!",
       rating: 5,
       image: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=150&h=150"
