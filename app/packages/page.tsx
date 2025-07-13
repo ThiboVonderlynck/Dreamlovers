@@ -7,73 +7,65 @@ const PackagesPage = () => {
     {
       id: 1,
       name: "Basis",
-      price: "1.200",
+      price: "1.500",
       icon: Heart,
       popular: false,
       description: "Perfect voor intieme ceremonies en kleinere vieringen",
       features: [
-        "4 uur opnames",
+        "Trouwfilm (6-10 min.)",
         "1 videograaf",
-        "Highlight reel (3-4 minuten)",
-        "Ceremonie beelden",
-        "Basis kleurcorrectie",
-        "Online galerij toegang",
-        "Digitale download"
+        "10u aanwezigheid",
+        "Drone beelden",
+        "Audio-opname",
+        "Ceremoniefilm",
+        "Trailer (1-2 min.)"
       ],
       highlight: "Ideaal voor intieme bruiloften"
     },
     {
       id: 2,
-      name: "Premium",
-      price: "2.500",
+      name: "Standaard",
+      price: "1.900",
       icon: Star,
       popular: true,
       description: "Ons populairste pakket met uitgebreide dekking",
       features: [
-        "8 uur opnames",
-        "2 videografen",
-        "Highlight reel (5-6 minuten)",
-        "Ceremonie & receptie beelden",
-        "Professionele kleurcorrectie",
-        "Audio verbetering",
-        "Online galerij toegang",
-        "Digitale download",
-        "USB-stick inbegrepen",
-        "Ruwe beelden backup"
+        "Trouwfilm (8-15 min.)",
+        "1 videograaf",
+        "Volledige dag aanwezig",
+        "Drone beelden",
+        "Audio-opname",
+        "Ceremoniefilm",
+        "Trailer (1-2 min.)",
+        "Same day video"
       ],
-      highlight: "Beste waarde voor complete dekking"
+      highlight: "Beste waarde voor de volledige ervaring"
     },
     {
       id: 3,
-      name: "Cinématisch",
-      price: "4.200",
+      name: "Exclusief",
+      price: "3.200",
       icon: Crown,
       popular: false,
       description: "De ultieme trouwfilm ervaring met luxe details",
       features: [
-        "Volledige dag dekking (12 uur)",
-        "3 videografen",
-        "Uitgebreide highlight reel (8-10 minuten)",
-        "Ceremonie & receptie beelden",
-        "Drone beelden (waar toegestaan)",
-        "Professionele kleurcorrectie",
-        "Audio verbetering",
-        "Aangepaste muziek selectie",
-        "Online galerij toegang",
-        "Digitale download",
-        "USB-stick inbegrepen",
-        "Ruwe beelden backup",
-        "Zelfde dag edit preview",
-        "Aangepaste verpakking"
+        "Trouwfilm (8-15 min.)",
+        "2 videografen",
+        "Volledige dag aanwezig",
+        "Drone beelden",
+        "Audio-opname",
+        "Ceremoniefilm",
+        "Trailer (1-2 min.)",
+        "Same day video"
       ],
-      highlight: "Luxe ervaring met premium functies"
+      highlight: "Luxe ervaring door de extra mogelijkheid aan perspectieven"
     }
   ];
 
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <section className="bg-beige/20">
+      <section className="bg-beige">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto py-20">
             <span className="text-subtitle">Prijspakketten</span>
@@ -89,7 +81,7 @@ const PackagesPage = () => {
       </section>
 
       {/* Packages Grid */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="pt-24 pb-14 bg-white">
         <div className="container-custom">
           <div className="grid lg:grid-cols-3 gap-8">
             {packages.map((pkg, index) => {
@@ -155,6 +147,17 @@ const PackagesPage = () => {
         </div>
       </section>
 
+      {/* Price Info */}
+      <section className="bg-white pb-14">
+        <div className="container-custom">
+          <div className="text-left">
+            <p className="text-gold text-base italic">
+              *Prijzen zijn telkens exclusief btw.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Additional Info */}
       <section className="py-16 lg:py-24 bg-beige/10">
         <div className="container-custom">
@@ -194,7 +197,7 @@ const PackagesPage = () => {
             </div>
 
             <div className="text-center mt-12">
-              <p className="text-body mb-6">
+              <p className="text-body mb-8">
                 Hebben jullie iets speciaals nodig? Wij maken graag een gepersonaliseerd pakket speciaal voor jullie.
               </p>
               <Link href="/contact" className="btn-primary">

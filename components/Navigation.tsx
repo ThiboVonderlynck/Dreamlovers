@@ -31,11 +31,11 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="top-0 w-full z-50 bg>white">
+    <nav className="top-0 w-full z-50 bg-black">
       <div className="container-custom">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-playfair font-bold text-black">
+          <Link href="/" className="text-4xl font-dancing font-bold text-white">
             Dreamlovers
           </Link>
 
@@ -45,13 +45,16 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium transition-colors duration-200 ${
+                className={`relative text-sm font-medium transition-colors duration-200 ${
                   pathname === item.href
-                    ? 'text-gold border-b-2 border-gold'
-                    : 'text-black hover:text-gold'
+                    ? 'text-white border-b border-white'
+                    : 'text-white hover:text-white group'
                 }`}
               >
                 {item.name}
+                {pathname !== item.href && (
+                  <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                )}
               </Link>
             ))}
           </div>

@@ -1,10 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Dancing_Script } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import CallToAction from '@/components/CallToAction';
+import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
+const dancingScript = Dancing_Script({ subsets: ['latin'], variable: '--font-dancing-script' });
 
 export const metadata: Metadata = {
   title: 'Dreamlovers - Trouwvideografie | Cinématische Trouwfilms',
@@ -30,13 +32,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${dancingScript.variable}`}>
       <body className="bg-white text-black antialiased">
         <Navigation />
         <main>
           {children}
         </main>
         <CallToAction />
+        <Footer />
       </body>
     </html>
   );

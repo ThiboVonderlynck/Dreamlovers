@@ -53,11 +53,11 @@
   }
   
   .btn-primary {
-    @apply bg-black text-white px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-[#9F8E6E] hover:scale-105 active:scale-95;
+    @apply bg-black text-white px-8 py-4 rounded-full font-medium;
   }
   
   .btn-secondary {
-    @apply bg-[#EAD9B3] text-black px-8 py-4 rounded-full font-medium transition-all duration-300 hover:bg-[#9F8E6E] hover:text-white hover:scale-105 active:scale-95;
+    @apply bg-[#EAD9B3] text-black px-8 py-4 rounded-full font-medium;
   }
 }
 

@@ -2,52 +2,39 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Play, Heart } from 'lucide-react';
+import { Play } from 'lucide-react';
 
 const HeroSection = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Video Background */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
+        <img
+          src="/images/header.jpg"
+          alt="Wedding background"
           className="w-full h-full object-cover"
-          poster="https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080"
-        >
-          <source src="https://player.vimeo.com/external/434045526.hd.mp4?s=c27eecc69a27dbc4ff2b87d38afc35f1a9e4c02a&profile_id=174" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <div className="absolute inset-0 video-overlay"></div>
+        />
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center text-white px-4 w-full">
         <div>
-          <div className="flex items-center justify-center mb-6">
-            <Heart className="h-8 w-8 text-beige mr-3" />
-            <span className="text-beige font-medium tracking-wide uppercase text-sm">
-              Waar gevoel een film wordt
-            </span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6 leading-tight">
-            Dreamlovers
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair font-regular mb-6 leading-tight tracking-wide whitespace-nowrap">
+            CINEMATISCHE TROUWFILM
           </h1>
           
-          <p className="text-lg md:text-xl mb-8 text-beige font-light max-w-3xl mx-auto leading-relaxed">
-            Wij brengen jullie trouwdag tot leven door het verfilmen van de échte, pure emoties. Jullie momenten worden op een spontane manier in beeld gebracht, vol liefde, warmte en betekenis. Zo kunnen jullie telkens opnieuw genieten van jullie dag en deze herbeleven.
+          <p className="text-base md:text-xl mb-8 text-white font-medium max-w-2xl mx-auto leading-relaxed">
+            "Jullie trouwdag, voor altijd in beeld gebracht."
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/contact" className="btn-secondary inline-flex items-center">
-              Bekijk onze huwelijksfilms
+          <div className="flex justify-center">
+            <Link 
+              href="/portfolio" 
+              className="inline-flex items-center bg-white text-black px-8 py-4 font-medium hover:bg-white/90 transition-colors duration-300"
+            >
+              Bekijk onze showreel
             </Link>
-            <button className="inline-flex items-center text-white hover:text-beige transition-colors duration-300 group">
-              <Play className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
-              Bekijk onze films
-            </button>
           </div>
         </div>
       </div>
