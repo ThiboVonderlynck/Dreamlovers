@@ -14,13 +14,13 @@ const Testimonials = () => {
     },
     {
       id: 2,
-      quote: "Ongelooflijk hoe jullie onze dag hebben vastgelegd. Elke keer als we kijken, krijgen we kippenvel!",
-      names: "Emma & Tom"
+      quote: "We waren al zo onder de indruk van de same day video, maar toen we de volledige trouwfilm zagen, kwamen alle herinneringen aan onze prachtige dag terug! Perfecte muziek, zalige beelden, een echte aanrader!",
+      names: "Loes & Baptiste"
     },
     {
       id: 3,
-      quote: "De film is precies wat we hoopten - emotioneel, prachtig en vol liefde. Dank jullie wel!",
-      names: "Lisa & David"
+      quote: "De Same Day video was zoveel mooier dan we hadden kunnen dromen. Zo'n topmoment om deze samen te kunnen zien tijdens ons feest",
+      names: "Lynn & Maarten"
     }
   ];
 

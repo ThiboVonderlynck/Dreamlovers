@@ -1,27 +1,63 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Heart, Camera, Users, Music } from 'lucide-react';
 
 const PortfolioPage = () => {
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Video is in viewport, play it
+              video.play().catch((error) => {
+                console.log(`Auto-play was prevented for video ${index}:`, error);
+              });
+            } else {
+              // Video is out of viewport, pause it
+              video.pause();
+            }
+          });
+        },
+        {
+          threshold: 0.5, // Trigger when 50% of the video is visible
+        }
+      );
+
+      observer.observe(video);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, []);
+
   // Showreel videos
   const showreelVideos = [
     {
       id: 1,
       title: "Sarah & Michael - Tuscany Romance",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800&h=450",
+      videoId: "KPaaOY_Q4Ho",
       duration: "4:32"
     },
     {
       id: 2,
-      title: "Emma & James - Mountain Ceremony",
-      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=800&h=450",
+      title: "Emma & James - Mountain Ceremony", 
+      videoId: "KPaaOY_Q4Ho",
       duration: "6:15"
     },
     {
       id: 3,
       title: "Lisa & David - Garden Celebration",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800&h=450",
+      videoId: "KPaaOY_Q4Ho", 
       duration: "5:48"
     }
   ];
@@ -33,6 +69,7 @@ const PortfolioPage = () => {
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden zich voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -40,6 +77,7 @@ const PortfolioPage = () => {
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Camera
     },
     {
@@ -47,6 +85,7 @@ const PortfolioPage = () => {
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -54,6 +93,7 @@ const PortfolioPage = () => {
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Camera
     },
     {
@@ -61,6 +101,7 @@ const PortfolioPage = () => {
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -68,6 +109,7 @@ const PortfolioPage = () => {
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Users
     },
     {
@@ -75,6 +117,7 @@ const PortfolioPage = () => {
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Music
     },
     {
@@ -82,6 +125,7 @@ const PortfolioPage = () => {
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -89,6 +133,7 @@ const PortfolioPage = () => {
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      videoPath: "/videos/Dessert.webm", // Easy to replace later
       icon: Music
     }
   ];
@@ -185,23 +230,16 @@ const PortfolioPage = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {showreelVideos.map((video, index) => (
               <div key={video.id} className="group">
-                <div className="relative aspect-video bg-black overflow-hidden cursor-pointer">
-                  {/* Video Thumbnail */}
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-full object-cover"
+                <div className="relative aspect-video">
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${video.videoId}?hd=1&vq=hd1080`}
+                    frameBorder="0"
+                    title={video.title}
+                    aria-hidden="true"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                   />
-                  
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300"></div>
-                  
-                  {/* Play Button */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Play className="h-8 w-8 text-white ml-1" fill="white" />
-                    </div>
-                  </div>
                 </div>
                 
                 {/* Video Info */}
@@ -248,18 +286,18 @@ const PortfolioPage = () => {
                   {/* Video */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                     <div className="relative group overflow-hidden">
-                      <img
-                        src={step.thumbnail}
-                        alt={step.title}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      
-                      {/* Video Play Overlay */}
-                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform backdrop-blur-sm">
-                          <Play className="h-8 w-8 text-white ml-1" />
-                        </div>
-                      </div>
+                      <video
+                        ref={(el) => {
+                          videoRefs.current[index] = el;
+                        }}
+                        className="w-full h-80 object-cover"
+                        controls
+                        muted
+                        preload="metadata"
+                      >
+                        <source src={step.videoPath} type="video/webm" />
+                        Your browser does not support the video tag.
+                      </video>
                     </div>
                   </div>
                 </div>

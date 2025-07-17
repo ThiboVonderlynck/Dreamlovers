@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Heart, Star, Crown } from 'lucide-react';
+import { Check, Heart, Star, Crown, Award, Shield, Clock, Headphones } from 'lucide-react';
 import Link from 'next/link';
 
 const PackagesPage = () => {
@@ -161,47 +161,83 @@ const PackagesPage = () => {
       {/* Additional Info */}
       <section className="py-16 lg:py-24 bg-beige/10">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-playfair font-bold mb-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-playfair font-bold mb-6">
                 Wat is Inbegrepen in Elk Pakket
               </h2>
-              <p className="text-body">
+              <p className="text-body text-lg leading-relaxed max-w-3xl mx-auto">
                 Ongeacht welk pakket jullie kiezen, jullie ontvangen onze kenmerkende 
                 kwaliteit en aandacht voor detail.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h3 className="font-playfair font-semibold text-xl mb-4">Kwaliteitsgarantie</h3>
-                <ul className="space-y-2 text-body">
-                  <li>• Professionele apparatuur</li>
-                  <li>• Ervaren videografen</li>
-                  <li>• High-definition 4K beelden</li>
-                  <li>• Professionele audio opname</li>
-                  <li>• Cinématische kleurcorrectie</li>
+            <div className="grid md:grid-cols-2 gap-12 mb-16">
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-beige/20">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center mr-4">
+                    <Award className="h-6 w-6 text-gold" />
+                  </div>
+                  <h3 className="font-playfair font-semibold text-xl">Kwaliteitsgarantie</h3>
+                </div>
+                <ul className="space-y-4">
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">Professionele apparatuur</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">Ervaren videografen</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">High-definition 4K beelden</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">Professionele audio opname</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Check className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">Cinématische kleurcorrectie</span>
+                  </li>
                 </ul>
               </div>
               
-              <div>
-                <h3 className="font-playfair font-semibold text-xl mb-4">Levering & Ondersteuning</h3>
-                <ul className="space-y-2 text-body">
-                  <li>• 4-6 weken levertijd</li>
-                  <li>• Online galerij voor eenvoudig delen</li>
-                  <li>• Meerdere formaat opties</li>
-                  <li>• Levenslange klantenservice</li>
-                  <li>• Tevredenheidsgarantie</li>
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-beige/20">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center mr-4">
+                    <Shield className="h-6 w-6 text-gold" />
+                  </div>
+                  <h3 className="font-playfair font-semibold text-xl">Levering & Ondersteuning</h3>
+                </div>
+                <ul className="space-y-4">
+                  <li className="flex items-start space-x-3">
+                    <Clock className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">4 weken levertijd</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Headphones className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">Levenslange klantenservice</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <Shield className="h-5 w-5 text-gold mt-0.5 flex-shrink-0" />
+                    <span className="text-body">Tevredenheidsgarantie</span>
+                  </li>
                 </ul>
               </div>
             </div>
 
-            <div className="text-center mt-12">
-              <p className="text-body mb-8">
+            <div className="bg-gradient-to-r from-gold/5 to-beige/20 rounded-2xl p-8 md:p-12 text-center">
+              <h3 className="text-2xl font-playfair font-bold mb-4">
+                Op Maat Gemaakt Voor Jullie
+              </h3>
+              <p className="text-body text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                 Hebben jullie iets speciaals nodig? Wij maken graag een gepersonaliseerd pakket speciaal voor jullie.
               </p>
-              <Link href="/contact" className="btn-primary">
-                Vraag Aangepaste Offerte Aan
+              <Link href="/contact" className="btn-primary inline-flex items-center space-x-2">
+                <span>Vraag Aangepaste Offerte Aan</span>
+                <Crown className="h-5 w-5" />
               </Link>
             </div>
           </div>
