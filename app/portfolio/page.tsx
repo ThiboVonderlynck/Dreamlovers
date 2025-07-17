@@ -252,6 +252,42 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Same Day Edit Section */}
+      <section className="py-16 bg-beige/10">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-1">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                <img 
+                  src="/images/portfolio/sameday.webp"
+                  alt="Emotionele reacties tijdens het bekijken van de same day edit"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="order-2">
+              <span className="text-subtitle">Same Day Edit</span>
+              <h2 className="text-3xl md:text-4xl font-playfair font-bold mt-2 mb-6">
+                Herbeleef jullie dag nog dezelfde avond
+              </h2>
+              <div className="space-y-4 text-lg leading-relaxed">
+                <p>
+                  Een same day video is ideaal om jullie dag nog eens samen te vatten, 
+                  wat vaak zorgt voor ontroerende reacties. Daarnaast kan het een leuk 
+                  moment zijn om de openingsdans in te leiden en iedereen rond de dansvloer 
+                  te vragen na het filmpje.
+                </p>
+                <p>
+                  Bovendien krijgen ook de gasten die er niet de hele dag bij konden zijn, 
+                  zo een inkijk in hoe jullie dag verlopen is. Een bijzondere toevoeging 
+                  aan een toch al onvergetelijke dag!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Workflow Process Section */}
       <section className="py-16 lg:py-24 bg-beige/10">
         <div className="container-custom">
