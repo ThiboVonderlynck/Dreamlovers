@@ -320,9 +320,9 @@ const PortfolioPage = () => {
                         tabIndex={0}
                       >
                         {mutedStates[index] ? (
-                          <VolumeX className="w-6 h-6" />
+                          <VolumeX className="w-4 h-4" />
                         ) : (
-                          <Volume2 className="w-6 h-6" />
+                          <Volume2 className="w-4 h-4" />
                         )}
                       </button>
                     </div>
