@@ -79,7 +79,7 @@ const PortfolioPage = () => {
       id: 1,
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/Startvandedag.png",
       videoPath: "/videos/portfolio/Startvandedag.webm", // Easy to replace later
       icon: Heart
     },
@@ -87,7 +87,7 @@ const PortfolioPage = () => {
       id: 2,
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
-      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/Firstlook.png",
       videoPath: "/videos/portfolio/Firstlook.webm", // Easy to replace later
       icon: Camera
     },
@@ -95,7 +95,7 @@ const PortfolioPage = () => {
       id: 3,
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/Zegja.png",
       videoPath: "/videos/portfolio/Zegja.webm", // Easy to replace later
       icon: Heart
     },
@@ -111,7 +111,7 @@ const PortfolioPage = () => {
       id: 5,
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/Geloftes.png",
       videoPath: "/videos/portfolio/Geloftes.webm", // Easy to replace later
       icon: Heart
     },
@@ -119,7 +119,7 @@ const PortfolioPage = () => {
       id: 6,
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
-      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/FamilieVrienden.png",
       videoPath: "/videos/portfolio/FamilieVrienden.webm", // Easy to replace later
       icon: Users
     },
@@ -127,7 +127,7 @@ const PortfolioPage = () => {
       id: 7,
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/Intrede.png",
       videoPath: "/videos/portfolio/Intrede.webm", // Easy to replace later
       icon: Music
     },
@@ -143,7 +143,7 @@ const PortfolioPage = () => {
       id: 9,
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      thumbnail: "/images/portfolio/Openingsdans.png",
       videoPath: "/videos/portfolio/Openingsdans.webm", // Easy to replace later
       icon: Music
     }
