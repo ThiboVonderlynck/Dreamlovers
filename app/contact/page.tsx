@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import ContactForm from '@/components/ContactForm';
 import { Phone, Mail, ChevronDown } from 'lucide-react';
