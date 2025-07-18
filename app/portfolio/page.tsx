@@ -254,11 +254,11 @@ const PortfolioPage = () => {
       </section>
 
       {/* Workflow Process Section */}
-      <section className="py-16 lg:py-24 bg-black">
+      <section className="py-16 lg:py-24 bg-beige/20">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="text-subtitle text-beige">Ons Proces</span>
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold mt-2 mb-6 text-white">
+            <span className="text-subtitle text-subtitle">Ons Proces</span>
+            <h2 className="text-3xl md:text-4xl font-playfair font-bold mt-2 mb-6 text-black">
               De hoogtepunten van jullie dag
             </h2>
           </div>
@@ -275,11 +275,11 @@ const PortfolioPage = () => {
                 >
                   {/* Content */}
                   <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'} text-center`}>
-                    <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-white">
+                    <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-black">
                       {step.title}
                     </h3>
                     
-                    <p className="text-body text-lg leading-relaxed text-white">
+                    <p className="text-body text-lg leading-relaxed text-black">
                       {step.description}
                     </p>
                   </div>
