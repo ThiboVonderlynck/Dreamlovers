@@ -80,7 +80,7 @@ const PortfolioPage = () => {
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden zich voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Startvandedag.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -88,7 +88,7 @@ const PortfolioPage = () => {
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Firstlook.webm", // Easy to replace later
       icon: Camera
     },
     {
@@ -96,7 +96,7 @@ const PortfolioPage = () => {
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Zegja.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -104,7 +104,7 @@ const PortfolioPage = () => {
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Fotoshoot.webm", // Easy to replace later
       icon: Camera
     },
     {
@@ -112,7 +112,7 @@ const PortfolioPage = () => {
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Geloftes.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -120,7 +120,7 @@ const PortfolioPage = () => {
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/FamilieVrienden.webm", // Easy to replace later
       icon: Users
     },
     {
@@ -128,7 +128,7 @@ const PortfolioPage = () => {
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Intrede.webm", // Easy to replace later
       icon: Music
     },
     {
@@ -136,7 +136,7 @@ const PortfolioPage = () => {
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
       thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Dessert.webm", // Easy to replace later
       icon: Heart
     },
     {
@@ -144,7 +144,7 @@ const PortfolioPage = () => {
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
       thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      videoPath: "/videos/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Openingsdans.webm", // Easy to replace later
       icon: Music
     }
   ];

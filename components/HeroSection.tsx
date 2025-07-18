@@ -9,9 +9,12 @@ const HeroSection = () => {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/images/header.jpg"
-          alt="Wedding background"
+        <video
+          src="/videos/home/Bannervideo.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20"></div>
