@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const ShowreelSection = () => {
   return (
@@ -11,18 +12,23 @@ const ShowreelSection = () => {
           </h2>
         </div>
 
-        {/* Video Container - Extended beyond section */}
+        {/* Image Container - Extended beyond section */}
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="relative mb-[-100px]">
-            <iframe
-              className="w-full aspect-video self-stretch md:min-h-96"
-              src="https://www.youtube.com/embed/KPaaOY_Q4Ho?start=9&hd=1&vq=hd1080"
-              frameBorder="0"
-              title="Product Overview Video"
-              aria-hidden="true"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+            <Image
+              src="/images/home/ShowreelThumbnail.webp"
+              alt="Showreel thumbnail"
+              width={1280}
+              height={720}
+              className="w-full aspect-video self-stretch md:min-h-96 object-cover"
+              priority
             />
+            <div className="absolute inset-0 bg-black/40 pointer-events-none rounded-lg" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-playfair font-bold md:text-2xl text-white drop-shadow-lg tracking-wide uppercase select-none">
+                Coming Soon
+              </span>
+            </div>
           </div>
         </div>
       </div>

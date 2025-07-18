@@ -1,5 +1,6 @@
 import React from 'react';
 import { Camera, Heart, Users } from 'lucide-react';
+import Image from 'next/image';
 
 const AboutSection = () => {
   return (
@@ -60,9 +61,11 @@ const AboutSection = () => {
           {/* Image */}
           <div>
             <div className="relative">
-              <img
-                src="https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800&h=600"
+              <Image
+                src="/images/home/LaraBert.webp"
                 alt="Wedding couple embracing"
+                width={800}
+                height={600}
                 className="w-full h-[600px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>

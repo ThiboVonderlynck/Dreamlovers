@@ -3,12 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Heart, Camera, Users, Music, Volume2, VolumeX } from 'lucide-react';
 
-const TEST_THUMBNAIL = "/images/portfolio/Fotoshoot.png";
-
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
-  const [isPlaying, setIsPlaying] = useState<boolean[]>(Array(9).fill(false));
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -29,8 +26,8 @@ const PortfolioPage = () => {
           });
         },
         {
-          threshold: 0,
-          rootMargin: '-40% 0px -40% 0px',
+          threshold: 0.15,
+          rootMargin: '-40% 0px -40% 0px', // Play when video is centered in viewport
         }
       );
 
@@ -47,16 +44,9 @@ const PortfolioPage = () => {
     setMutedStates((prev) => {
       const newStates = [...prev];
       newStates[index] = !newStates[index];
+      // Actually update the video element
       const video = videoRefs.current[index];
       if (video) video.muted = newStates[index];
-      return newStates;
-    });
-  };
-
-  const handlePlaying = (index: number) => {
-    setIsPlaying((prev) => {
-      const newStates = [...prev];
-      newStates[index] = true;
       return newStates;
     });
   };
@@ -88,65 +78,64 @@ const PortfolioPage = () => {
     {
       id: 1,
       title: "De start van de dag",
-      description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
-      videoPath: "/videos/portfolio/Startvandedag.webm",
+      description: "De eerste zon straalt naar binnen en jullie bereiden zich voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
+      videoPath: "/videos/portfolio/Startvandedag.webm", // Easy to replace later
       icon: Heart
     },
     {
       id: 2,
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
-      videoPath: "/videos/portfolio/Firstlook.webm",
+      videoPath: "/videos/portfolio/Firstlook.webm", // Easy to replace later
       icon: Camera
     },
     {
       id: 3,
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
-      videoPath: "/videos/portfolio/Zegja.webm",
+      videoPath: "/videos/portfolio/Zegja.webm", // Easy to replace later
       icon: Heart
     },
     {
       id: 4,
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
-      videoPath: "/videos/portfolio/Fotoshoot.webm",
-      thumbnail: "/images/portfolio/Fotoshoot.png",
+      videoPath: "/videos/portfolio/Fotoshoot.webm", // Easy to replace later
       icon: Camera
     },
     {
       id: 5,
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
-      videoPath: "/videos/portfolio/Geloftes.webm",
+      videoPath: "/videos/portfolio/Geloftes.webm", // Easy to replace later
       icon: Heart
     },
     {
       id: 6,
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
-      videoPath: "/videos/portfolio/FamilieVrienden.webm",
+      videoPath: "/videos/portfolio/FamilieVrienden.webm", // Easy to replace later
       icon: Users
     },
     {
       id: 7,
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
-      videoPath: "/videos/portfolio/Intrede.webm",
+      videoPath: "/videos/portfolio/Intrede.webm", // Easy to replace later
       icon: Music
     },
     {
       id: 8,
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
-      videoPath: "/videos/portfolio/Dessert.webm",
+      videoPath: "/videos/portfolio/Dessert.webm", // Easy to replace later
       icon: Heart
     },
     {
       id: 9,
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
-      videoPath: "/videos/portfolio/Openingsdans.webm",
+      videoPath: "/videos/portfolio/Openingsdans.webm", // Easy to replace later
       icon: Music
     }
   ];
@@ -222,6 +211,7 @@ const PortfolioPage = () => {
             {workflowSteps.map((step, index) => {
               const IconComponent = step.icon;
               const isEven = index % 2 === 0;
+              
               return (
                 <div 
                   key={step.id}
@@ -232,10 +222,12 @@ const PortfolioPage = () => {
                     <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-black">
                       {step.title}
                     </h3>
+                    
                     <p className="text-body text-lg leading-relaxed text-black">
                       {step.description}
                     </p>
                   </div>
+
                   {/* Video */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
@@ -248,20 +240,11 @@ const PortfolioPage = () => {
                         muted={mutedStates[index]}
                         preload="metadata"
                         playsInline
-                        poster={TEST_THUMBNAIL}
-                        onPlaying={() => handlePlaying(index)}
-                        loop
+                        // No controls
                       >
                         <source src={step.videoPath} type="video/webm" />
                         Your browser does not support the video tag.
                       </video>
-                      {/* Overlay thumbnail for fade effect */}
-                      <img
-                        src={TEST_THUMBNAIL}
-                        alt="Video thumbnail"
-                        className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-500 ${isPlaying[index] ? 'opacity-0' : 'opacity-100'}`}
-                        draggable={false}
-                      />
                       {/* Custom volume button */}
                       <button
                         type="button"
