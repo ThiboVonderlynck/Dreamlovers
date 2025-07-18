@@ -55,21 +55,21 @@ const PortfolioPage = () => {
   const showreelVideos = [
     {
       id: 1,
-      title: "Sarah & Michael - Tuscany Romance",
-      videoId: "KPaaOY_Q4Ho",
-      duration: "4:32"
+      title: "Sophie & Michiel - Trailer",
+      videoId: "CY7D7dcoPBM",
+      duration: "2:27"
     },
     {
       id: 2,
-      title: "Emma & James - Mountain Ceremony", 
-      videoId: "KPaaOY_Q4Ho",
-      duration: "6:15"
+      title: "Loes & Baptiste - Trailer", 
+      videoId: "rdVYZ5HVGgY",
+      duration: "2:17"
     },
     {
       id: 3,
-      title: "Lisa & David - Garden Celebration",
-      videoId: "KPaaOY_Q4Ho", 
-      duration: "5:48"
+      title: "Lynn & Maarten - trailer",
+      videoId: "ySx8nQrGLJQ", 
+      duration: "1:55"
     }
   ];
 
@@ -78,7 +78,8 @@ const PortfolioPage = () => {
     {
       id: 1,
       title: "De start van de dag",
-      description: "De eerste zon straalt naar binnen en jullie bereiden zich voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
+      description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/Startvandedag.webm", // Easy to replace later
       icon: Heart
     },
@@ -86,6 +87,7 @@ const PortfolioPage = () => {
       id: 2,
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/Firstlook.webm", // Easy to replace later
       icon: Camera
     },
@@ -93,6 +95,7 @@ const PortfolioPage = () => {
       id: 3,
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/Zegja.webm", // Easy to replace later
       icon: Heart
     },
@@ -100,6 +103,7 @@ const PortfolioPage = () => {
       id: 4,
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
+      thumbnail: "/images/portfolio/Fotoshoot.png",
       videoPath: "/videos/portfolio/Fotoshoot.webm", // Easy to replace later
       icon: Camera
     },
@@ -107,6 +111,7 @@ const PortfolioPage = () => {
       id: 5,
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/Geloftes.webm", // Easy to replace later
       icon: Heart
     },
@@ -114,6 +119,7 @@ const PortfolioPage = () => {
       id: 6,
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/FamilieVrienden.webm", // Easy to replace later
       icon: Users
     },
@@ -121,6 +127,7 @@ const PortfolioPage = () => {
       id: 7,
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/Intrede.webm", // Easy to replace later
       icon: Music
     },
@@ -128,6 +135,7 @@ const PortfolioPage = () => {
       id: 8,
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
+      thumbnail: "/images/portfolio/Dessert.png",
       videoPath: "/videos/portfolio/Dessert.webm", // Easy to replace later
       icon: Heart
     },
@@ -135,8 +143,66 @@ const PortfolioPage = () => {
       id: 9,
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
       videoPath: "/videos/portfolio/Openingsdans.webm", // Easy to replace later
       icon: Music
+    }
+  ];
+
+  const portfolioVideos = [
+    {
+      id: 1,
+      title: "Sarah & Michael",
+      style: "romantic",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A romantic summer wedding in Tuscany with breathtaking vineyard views",
+      duration: "4:32",
+      location: "Tuscany, Italy"
+    },
+    {
+      id: 2,
+      title: "Emma & James",
+      style: "cinematic",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "An intimate ceremony in the mountains with stunning landscapes",
+      duration: "6:15",
+      location: "Swiss Alps"
+    },
+    {
+      id: 3,
+      title: "Lisa & David",
+      style: "documentary",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A joyful celebration with family and friends in a beautiful garden",
+      duration: "5:48",
+      location: "English Countryside"
+    },
+    {
+      id: 4,
+      title: "Anna & Thomas",
+      style: "romantic",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A fairytale wedding in a historic castle",
+      duration: "7:22",
+      location: "Loire Valley, France"
+    },
+    {
+      id: 5,
+      title: "Maria & Carlos",
+      style: "cinematic",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A passionate Spanish wedding with flamenco traditions",
+      duration: "5:33",
+      location: "Seville, Spain"
+    },
+    {
+      id: 6,
+      title: "Sophie & Alex",
+      style: "documentary",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A bohemian beach wedding at sunset",
+      duration: "4:17",
+      location: "Santorini, Greece"
     }
   ];
 
@@ -238,9 +304,9 @@ const PortfolioPage = () => {
                         }}
                         className="w-full h-80 object-cover"
                         muted={mutedStates[index]}
-                        preload="metadata"
+                        preload="auto"
+                        poster={step.thumbnail} // Use thumbnail as placeholder
                         playsInline
-                        // No controls
                       >
                         <source src={step.videoPath} type="video/webm" />
                         Your browser does not support the video tag.
