@@ -67,11 +67,11 @@
   }
   
   .text-body {
-    @apply text-gray-700 leading-relaxed;
+    @apply text-black leading-relaxed;
   }
   
   .text-subtitle {
-    @apply text-[#9F8E6E] font-medium tracking-wide uppercase text-sm;
+    @apply text-[#413F3B] font-medium tracking-wide uppercase text-sm;
   }
 }
 

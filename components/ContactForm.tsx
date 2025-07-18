@@ -62,7 +62,7 @@ const ContactForm = () => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-beige/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-colors"
+            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow"
             placeholder="Jan & Marie Jansen"
           />
         </div>
@@ -78,7 +78,7 @@ const ContactForm = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-beige/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-colors"
+            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow"
             placeholder="jullie@email.com"
           />
         </div>
@@ -94,7 +94,7 @@ const ContactForm = () => {
           name="weddingDate"
           value={formData.weddingDate}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-beige/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-colors"
+          className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow"
         />
       </div>
 
@@ -109,7 +109,7 @@ const ContactForm = () => {
           rows={6}
           value={formData.message}
           onChange={handleChange}
-          className="w-full px-4 py-3 border border-beige/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-colors resize-none"
+          className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow resize-none"
           placeholder="Vertel ons over jullie trouwvisie, locatie, stijlvoorkeuren en eventuele speciale wensen..."
         />
       </div>

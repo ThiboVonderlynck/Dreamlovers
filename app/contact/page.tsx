@@ -6,7 +6,7 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <section className="py-16 lg:py-24 bg-beige/20">
+      <section className="py-16 lg:py-24 bg-beige">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto">
             <span className="text-subtitle">Contact</span>
@@ -15,7 +15,7 @@ const ContactPage = () => {
             </h1>
             <p className="text-body text-lg leading-relaxed">
               Contacteer ons of plan vrijblijvend een 
-              afspraak in via
+              afspraak in
             </p>
           </div>
         </div>
