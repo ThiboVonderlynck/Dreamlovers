@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ContactForm from '@/components/ContactForm';
-import { Phone, Mail, ChevronDown } from 'lucide-react';
+import { Phone, Mail } from 'lucide-react';
 
-const ContactPage = () => {
+export default function ContactPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -14,8 +14,7 @@ const ContactPage = () => {
               Laat hier een afspraak achter
             </h1>
             <p className="text-body text-lg leading-relaxed">
-              Contacteer ons of plan vrijblijvend een 
-              afspraak in
+              Contacteer ons of plan vrijblijvend een afspraak in
             </p>
           </div>
         </div>
@@ -32,13 +31,14 @@ const ContactPage = () => {
                 Vertel ons over jullie bijzondere dag en wij nemen binnen 24 uur contact met jullie op 
                 met een gepersonaliseerde offerte en beschikbaarheid.
               </p>
-              <ContactForm />
+              <Suspense>
+                <ContactForm />
+              </Suspense>
             </div>
 
             {/* Contact Info */}
             <div className="p-8 lg:p-12">
               <h2 className="text-3xl font-playfair font-bold mb-8 text-center">Contactinformatie</h2>
-              
               <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-beige/50 rounded-full flex items-center justify-center flex-shrink-0">
@@ -49,7 +49,6 @@ const ContactPage = () => {
                     <p className="text-body text-lg">+32 484 36 86 50</p>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-beige/50 rounded-full flex items-center justify-center flex-shrink-0">
                     <Mail className="h-6 w-6 text-gold" />
@@ -66,6 +65,4 @@ const ContactPage = () => {
       </section>
     </div>
   );
-};
-
-export default ContactPage;
+}
