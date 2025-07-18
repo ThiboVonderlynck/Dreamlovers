@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Heart, Camera, Users, Music } from 'lucide-react';
+import { Play, Heart, Camera, Users, Music, Volume2, VolumeX } from 'lucide-react';
 
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [hoveredVideo, setHoveredVideo] = useState<number | null>(null);
+  const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -17,18 +17,17 @@ const PortfolioPage = () => {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              // Video is in viewport, play it
               video.play().catch((error) => {
                 console.log(`Auto-play was prevented for video ${index}:`, error);
               });
             } else {
-              // Video is out of viewport, pause it
               video.pause();
             }
           });
         },
         {
-          threshold: 0.5, // Trigger when 50% of the video is visible
+          threshold: 0.15,
+          rootMargin: '-40% 0px -40% 0px', // Play when video is centered in viewport
         }
       );
 
@@ -40,6 +39,17 @@ const PortfolioPage = () => {
       observers.forEach(observer => observer.disconnect());
     };
   }, []);
+
+  const handleToggleMute = (index: number) => {
+    setMutedStates((prev) => {
+      const newStates = [...prev];
+      newStates[index] = !newStates[index];
+      // Actually update the video element
+      const video = videoRefs.current[index];
+      if (video) video.muted = newStates[index];
+      return newStates;
+    });
+  };
 
   // Showreel videos
   const showreelVideos = [
@@ -288,30 +298,33 @@ const PortfolioPage = () => {
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
                       <video
-                        ref={(el) => {
+                        ref={el => {
                           videoRefs.current[index] = el;
+                          if (el) el.muted = mutedStates[index];
                         }}
-                        className="w-full h-80 object-cover fade-controls group"
-                        muted
+                        className="w-full h-80 object-cover"
+                        muted={mutedStates[index]}
                         preload="metadata"
-                        controls
+                        playsInline
+                        // No controls
                       >
                         <source src={step.videoPath} type="video/webm" />
                         Your browser does not support the video tag.
                       </video>
-                      <style jsx global>{`
-                        .fade-controls::-webkit-media-controls-panel,
-                        .fade-controls::-webkit-media-controls,
-                        .fade-controls::-webkit-media-controls-enclosure {
-                          opacity: 0;
-                          transition: opacity 0.4s;
-                        }
-                        .group:hover .fade-controls::-webkit-media-controls-panel,
-                        .group:hover .fade-controls::-webkit-media-controls,
-                        .group:hover .fade-controls::-webkit-media-controls-enclosure {
-                          opacity: 1;
-                        }
-                      `}</style>
+                      {/* Custom volume button */}
+                      <button
+                        type="button"
+                        aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
+                        onClick={() => handleToggleMute(index)}
+                        className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
+                        tabIndex={0}
+                      >
+                        {mutedStates[index] ? (
+                          <VolumeX className="w-6 h-6" />
+                        ) : (
+                          <Volume2 className="w-6 h-6" />
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
