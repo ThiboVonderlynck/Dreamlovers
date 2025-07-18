@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const AboutMe = () => {
   return (
@@ -11,9 +12,11 @@ const AboutMe = () => {
           {/* Image */}
           <div>
             <div className="relative">
-              <img
-                src="/images/maxim.jpg"
+              <Image
+                src="/images/home/aboutMe.jpg"
                 alt="Maxim - Videographer"
+                width={800}
+                height={600}
                 className="w-full h-[600px] object-cover"
               />
             </div>

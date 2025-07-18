@@ -1,19 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Send, CheckCircle, AlertCircle, ChevronDown } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 const ContactForm = () => {
+  const searchParams = useSearchParams();
+  const pakketParam = searchParams.get('pakket') || '';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     weddingDate: '',
+    pakket: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  useEffect(() => {
+    if (pakketParam && ["Basis", "Standaard", "Exclusief", "Aangepast"].includes(pakketParam)) {
+      setFormData(prev => ({ ...prev, pakket: pakketParam }));
+    }
+  }, [pakketParam]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -37,7 +47,7 @@ const ContactForm = () => {
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', email: '', weddingDate: '', message: '' });
+        setFormData({ name: '', email: '', weddingDate: '', pakket: '', message: '' });
       } else {
         setSubmitStatus('error');
       }
@@ -62,7 +72,7 @@ const ContactForm = () => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow"
+            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_0_4px_rgba(218,165,32,0.15)] transition-shadow"
             placeholder="Jan & Marie Jansen"
           />
         </div>
@@ -78,24 +88,47 @@ const ContactForm = () => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow"
+            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_0_4px_rgba(218,165,32,0.15)] transition-shadow"
             placeholder="jullie@email.com"
           />
         </div>
       </div>
 
-      <div>
-        <label htmlFor="weddingDate" className="block text-sm font-medium text-black mb-2">
-          Trouwdatum
-        </label>
-        <input
-          type="date"
-          id="weddingDate"
-          name="weddingDate"
-          value={formData.weddingDate}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_10px_2px_rgba(218,165,32,0.15)] transition-shadow"
-        />
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <label htmlFor="weddingDate" className="block text-sm font-medium text-black mb-2">
+            Trouwdatum
+          </label>
+          <input
+            type="date"
+            id="weddingDate"
+            name="weddingDate"
+            value={formData.weddingDate}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_0_4px_rgba(218,165,32,0.15)] transition-shadow"
+          />
+        </div>
+        <div>
+          <label htmlFor="pakket" className="block text-sm font-medium text-black mb-2">
+            Pakket
+          </label>
+          <div className="relative">
+            <select
+              id="pakket"
+              name="pakket"
+              value={formData.pakket}
+              onChange={handleChange}
+              className="w-full px-4 pr-10 py-3 border border-beige rounded-lg focus:outline-none focus:shadow-[0_0_0_4px_rgba(218,165,32,0.15)] transition-shadow bg-white appearance-none"
+            >
+              <option value="">Selecteer een pakket</option>
+              <option value="Basis">Basis</option>
+              <option value="Standaard">Standaard</option>
+              <option value="Exclusief">Exclusief</option>
+              <option value="Aangepast">Aangepast</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gold w-5 h-5" />
+          </div>
+        </div>
       </div>
 
       <div>

@@ -130,7 +130,7 @@ const PackagesPage = () => {
 
                     {/* CTA Button */}
                     <Link 
-                      href="/contact"
+                      href={`/contact?pakket=${encodeURIComponent(pkg.name)}`}
                       className={`w-full inline-flex items-center justify-center px-8 py-4 rounded-full font-medium ${
                         pkg.popular
                           ? 'bg-gold text-white'
@@ -235,7 +235,7 @@ const PackagesPage = () => {
               <p className="text-body text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                 Hebben jullie iets speciaals nodig? Wij maken graag een gepersonaliseerd pakket speciaal voor jullie.
               </p>
-              <Link href="/contact" className="btn-primary inline-flex items-center space-x-2">
+              <Link href="/contact?pakket=Aangepast" className="btn-primary inline-flex items-center space-x-2">
                 <span>Vraag Aangepaste Offerte Aan</span>
                 <Crown className="h-5 w-5" />
               </Link>

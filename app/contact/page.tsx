@@ -1,6 +1,6 @@
 import React from 'react';
 import ContactForm from '@/components/ContactForm';
-import { Phone, Mail } from 'lucide-react';
+import { Phone, Mail, ChevronDown } from 'lucide-react';
 
 const ContactPage = () => {
   return (
