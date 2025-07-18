@@ -5,6 +5,7 @@ import { Play, Heart, Camera, Users, Music } from 'lucide-react';
 
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const [hoveredVideo, setHoveredVideo] = useState<number | null>(null);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -252,6 +253,74 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Workflow Process Section */}
+      <section className="py-16 lg:py-24 bg-black">
+        <div className="container-custom">
+          <div className="text-center mb-16">
+            <span className="text-subtitle text-beige">Ons Proces</span>
+            <h2 className="text-3xl md:text-4xl font-playfair font-bold mt-2 mb-6 text-white">
+              De hoogtepunten van jullie dag
+            </h2>
+          </div>
+
+          <div className="space-y-16">
+            {workflowSteps.map((step, index) => {
+              const IconComponent = step.icon;
+              const isEven = index % 2 === 0;
+              
+              return (
+                <div 
+                  key={step.id}
+                  className={`grid lg:grid-cols-2 gap-12 items-center`}
+                >
+                  {/* Content */}
+                  <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'} text-center`}>
+                    <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-white">
+                      {step.title}
+                    </h3>
+                    
+                    <p className="text-body text-lg leading-relaxed text-white">
+                      {step.description}
+                    </p>
+                  </div>
+
+                  {/* Video */}
+                  <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
+                    <div className="relative group overflow-hidden">
+                      <video
+                        ref={(el) => {
+                          videoRefs.current[index] = el;
+                        }}
+                        className="w-full h-80 object-cover fade-controls group"
+                        muted
+                        preload="metadata"
+                        controls
+                      >
+                        <source src={step.videoPath} type="video/webm" />
+                        Your browser does not support the video tag.
+                      </video>
+                      <style jsx global>{`
+                        .fade-controls::-webkit-media-controls-panel,
+                        .fade-controls::-webkit-media-controls,
+                        .fade-controls::-webkit-media-controls-enclosure {
+                          opacity: 0;
+                          transition: opacity 0.4s;
+                        }
+                        .group:hover .fade-controls::-webkit-media-controls-panel,
+                        .group:hover .fade-controls::-webkit-media-controls,
+                        .group:hover .fade-controls::-webkit-media-controls-enclosure {
+                          opacity: 1;
+                        }
+                      `}</style>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Same Day Edit Section */}
       <section className="py-16 bg-beige/10">
         <div className="container-custom">
@@ -284,61 +353,6 @@ const PortfolioPage = () => {
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Workflow Process Section */}
-      <section className="py-16 lg:py-24 bg-beige/10">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="text-subtitle">Ons Proces</span>
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold mt-2 mb-6">
-              De hoogtepunten van jullie dag
-            </h2>
-          </div>
-
-          <div className="space-y-16">
-            {workflowSteps.map((step, index) => {
-              const IconComponent = step.icon;
-              const isEven = index % 2 === 0;
-              
-              return (
-                <div 
-                  key={step.id}
-                  className={`grid lg:grid-cols-2 gap-12 items-center`}
-                >
-                  {/* Content */}
-                  <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'} text-center`}>
-                    <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4">
-                      {step.title}
-                    </h3>
-                    
-                    <p className="text-body text-lg leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-
-                  {/* Video */}
-                  <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                    <div className="relative group overflow-hidden">
-                      <video
-                        ref={(el) => {
-                          videoRefs.current[index] = el;
-                        }}
-                        className="w-full h-80 object-cover"
-                        controls
-                        muted
-                        preload="metadata"
-                      >
-                        <source src={step.videoPath} type="video/webm" />
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>
