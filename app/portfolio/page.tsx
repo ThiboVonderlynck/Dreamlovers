@@ -319,8 +319,10 @@ const PortfolioPage = () => {
                               if (isMobile) {
                                 el.playsInline = true;
                                 el.preload = "metadata";
+                                el.controls = true; // Add native controls for mobile
                               } else {
                                 el.preload = "auto";
+                                el.controls = false; // No controls for desktop
                               }
                             }
                           }}
@@ -329,8 +331,9 @@ const PortfolioPage = () => {
                           preload={isMobile ? "metadata" : "auto"}
                           playsInline
                           loop
+                          controls={isMobile}
                           poster={`/images/portfolio/${step.videoName}.webp`}
-                          onClick={() => handleVideoClick(index)}
+                          onClick={!isMobile ? () => handleVideoClick(index) : undefined}
                         >
                           <source src={`/videos/portfolio/${step.videoName}.webm`} type="video/webm" />
                           <source src={`/videos/portfolio/${step.videoName}.mp4`} type="video/mp4" />
@@ -338,37 +341,22 @@ const PortfolioPage = () => {
                         </video>
                       </div>
                       
-                      {/* Mobile play/pause button */}
-                      {isMobile && (
+                      {/* Volume button - only for desktop */}
+                      {!isMobile && (
                         <button
                           type="button"
-                          aria-label={playingStates[index] ? 'Pause video' : 'Play video'}
-                          onClick={() => handleVideoClick(index)}
-                          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-4 transition-opacity duration-300 focus:outline-none shadow-lg
-                            ${playingStates[index] ? 'opacity-0' : 'opacity-100'}`}
+                          aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
+                          onClick={() => handleToggleMute(index)}
+                          className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
+                          tabIndex={0}
                         >
-                          {playingStates[index] ? (
-                            <Pause className="w-8 h-8" />
+                          {mutedStates[index] ? (
+                            <VolumeX className="w-4 h-4" />
                           ) : (
-                            <Play className="w-8 h-8" />
+                            <Volume2 className="w-4 h-4" />
                           )}
                         </button>
                       )}
-
-                      {/* Volume button - for both mobile and desktop */}
-                      <button
-                        type="button"
-                        aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
-                        onClick={() => handleToggleMute(index)}
-                        className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
-                        tabIndex={0}
-                      >
-                        {mutedStates[index] ? (
-                          <VolumeX className="w-4 h-4" />
-                        ) : (
-                          <Volume2 className="w-4 h-4" />
-                        )}
-                      </button>
 
                       {/* In view indicator (for debugging) */}
                       {process.env.NODE_ENV === 'development' && (
