@@ -36,17 +36,29 @@ const Footer = () => {
                         <div>
                             <h3 className="text-lg font-inter font-medium text-beige mb-4">Navigatie</h3>
                             <nav className="space-y-2">
-                                <Link href="/" className="block hover:text-gold transition-colors">
-                                    Home
+                                <Link href="/" className="relative block text-white hover:text-white transition-colors duration-200 group">
+                                    <span className="relative inline-block">
+                                        Home
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </span>
                                 </Link>
-                                <Link href="/portfolio" className="block hover:text-gold transition-colors">
-                                    Portfolio
+                                <Link href="/portfolio" className="relative block text-white hover:text-white transition-colors duration-200 group">
+                                    <span className="relative inline-block">
+                                        Portfolio
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </span>
                                 </Link>
-                                <Link href="/packages" className="block hover:text-gold transition-colors">
-                                    Prijspakketten
+                                <Link href="/packages" className="relative block text-white hover:text-white transition-colors duration-200 group">
+                                    <span className="relative inline-block">
+                                        Prijspakketten
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </span>
                                 </Link>
-                                <Link href="/contact" className="block hover:text-gold transition-colors">
-                                    Contact
+                                <Link href="/contact" className="relative block text-white hover:text-white transition-colors duration-200 group">
+                                    <span className="relative inline-block">
+                                        Contact
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </span>
                                 </Link>
                             </nav>
                         </div>
@@ -57,15 +69,35 @@ const Footer = () => {
                             <div className="space-y-3">
                                 <div className="flex items-center space-x-3">
                                     <Mail size={20} className="text-gold" />
-                                    <span>info@dreamlovers.com</span>
+                                    <a 
+                                        href="mailto:info@dreamlovers.com" 
+                                        className="relative inline-block text-white hover:text-white transition-colors duration-200 group cursor-pointer"
+                                    >
+                                        info@dreamlovers.com
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </a>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <Phone size={20} className="text-gold" />
-                                    <span>+32 484 36 86 50</span>
+                                    <a 
+                                        href="tel:+32484368650" 
+                                        className="relative inline-block text-white hover:text-white transition-colors duration-200 group cursor-pointer"
+                                    >
+                                        +32 484 36 86 50
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </a>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <MapPin size={20} className="text-gold" />
-                                    <span>Ichtegem</span>
+                                    <a 
+                                        href="https://maps.google.com/?q=Ichtegem,Belgium" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="relative inline-block text-white hover:text-white transition-colors duration-200 group cursor-pointer"
+                                    >
+                                        Ichtegem
+                                        <span className="absolute bottom-0 left-1/2 w-0 h-px bg-white transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
