@@ -1,18 +1,27 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Heart, Camera, Users, Music, Volume2, VolumeX } from 'lucide-react';
+import { Play, Heart, Camera, Users, Music, Volume2, VolumeX, Pause } from 'lucide-react';
 
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
+  const [isPlaying, setIsPlaying] = useState<boolean[]>(Array(9).fill(false));
+  const [showPlayButton, setShowPlayButton] = useState<boolean[]>(Array(9).fill(true));
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768); // Adjust threshold as needed
+    // Detect mobile devices
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent));
+    };
     checkMobile();
     window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
 
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
@@ -20,12 +29,50 @@ const PortfolioPage = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting && !isMobile) {
-              video.play().catch((error) => {
-                console.log(`Auto-play was prevented for video ${index}:`, error);
-              });
-            } else if (!isMobile) {
-              video.pause();
+            if (!isMobile) {
+              // Desktop behavior: auto-play when in view
+              if (entry.isIntersecting) {
+                video.play().catch((error) => {
+                  console.log(`Auto-play was prevented for video ${index}:`, error);
+                });
+                setIsPlaying((prev) => {
+                  const newStates = [...prev];
+                  newStates[index] = true;
+                  return newStates;
+                });
+                setShowPlayButton((prev) => {
+                  const newStates = [...prev];
+                  newStates[index] = false;
+                  return newStates;
+                });
+              } else {
+                video.pause();
+                setIsPlaying((prev) => {
+                  const newStates = [...prev];
+                  newStates[index] = false;
+                  return newStates;
+                });
+                setShowPlayButton((prev) => {
+                  const newStates = [...prev];
+                  newStates[index] = true;
+                  return newStates;
+                });
+              }
+            } else {
+              // Mobile: pause when out of view
+              if (!entry.isIntersecting) {
+                video.pause();
+                setIsPlaying((prev) => {
+                  const newStates = [...prev];
+                  newStates[index] = false;
+                  return newStates;
+                });
+                setShowPlayButton((prev) => {
+                  const newStates = [...prev];
+                  newStates[index] = true;
+                  return newStates;
+                });
+              }
             }
           });
         },
@@ -41,7 +88,6 @@ const PortfolioPage = () => {
 
     return () => {
       observers.forEach(observer => observer.disconnect());
-      window.removeEventListener('resize', checkMobile);
     };
   }, [isMobile]);
 
@@ -49,21 +95,45 @@ const PortfolioPage = () => {
     setMutedStates((prev) => {
       const newStates = [...prev];
       newStates[index] = !newStates[index];
+      // Actually update the video element
       const video = videoRefs.current[index];
       if (video) video.muted = newStates[index];
       return newStates;
     });
   };
 
-  const handlePlayVideo = (index: number) => {
+  const handlePlayPause = (index: number) => {
     const video = videoRefs.current[index];
-    if (video && isMobile) {
-      video.play().catch((error) => {
-        console.log(`Play was prevented for video ${index}:`, error);
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(prev => {
+        const newStates = [...prev];
+        newStates[index] = true;
+        return newStates;
+      });
+      setShowPlayButton(prev => {
+        const newStates = [...prev];
+        newStates[index] = false;
+        return newStates;
+      });
+    } else {
+      video.pause();
+      setIsPlaying(prev => {
+        const newStates = [...prev];
+        newStates[index] = false;
+        return newStates;
+      });
+      setShowPlayButton(prev => {
+        const newStates = [...prev];
+        newStates[index] = true;
+        return newStates;
       });
     }
   };
 
+  // Showreel videos
   const showreelVideos = [
     {
       id: 1,
@@ -85,6 +155,7 @@ const PortfolioPage = () => {
     }
   ];
 
+  // Workflow steps with Dutch descriptions
   const workflowSteps = [
     {
       id: 1,
@@ -92,7 +163,6 @@ const PortfolioPage = () => {
       description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
       thumbnail: "/images/portfolio/Startvandedag.webp",
       videoPath: "/videos/portfolio/Startvandedag.webm",
-      icon: Heart
     },
     {
       id: 2,
@@ -100,7 +170,6 @@ const PortfolioPage = () => {
       description: "Het begin van wat beloofd een prachtige dag te worden.",
       thumbnail: "/images/portfolio/Firstlook.webp",
       videoPath: "/videos/portfolio/Firstlook.webm",
-      icon: Camera
     },
     {
       id: 3,
@@ -108,7 +177,6 @@ const PortfolioPage = () => {
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
       thumbnail: "/images/portfolio/Zegja.webp",
       videoPath: "/videos/portfolio/Zegja.webm",
-      icon: Heart
     },
     {
       id: 4,
@@ -116,7 +184,6 @@ const PortfolioPage = () => {
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
       thumbnail: "/images/portfolio/Fotoshoot.webp",
       videoPath: "/videos/portfolio/Fotoshoot.webm",
-      icon: Camera
     },
     {
       id: 5,
@@ -124,7 +191,6 @@ const PortfolioPage = () => {
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
       thumbnail: "/images/portfolio/Geloftes.webp",
       videoPath: "/videos/portfolio/Geloftes.webm",
-      icon: Heart
     },
     {
       id: 6,
@@ -132,7 +198,6 @@ const PortfolioPage = () => {
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
       thumbnail: "/images/portfolio/FamilieVrienden.webp",
       videoPath: "/videos/portfolio/FamilieVrienden.webm",
-      icon: Users
     },
     {
       id: 7,
@@ -140,7 +205,6 @@ const PortfolioPage = () => {
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
       thumbnail: "/images/portfolio/Intrede.webp",
       videoPath: "/videos/portfolio/Intrede.webm",
-      icon: Music
     },
     {
       id: 8,
@@ -148,7 +212,6 @@ const PortfolioPage = () => {
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
       thumbnail: "/images/portfolio/Dessert.webp",
       videoPath: "/videos/portfolio/Dessert.webm",
-      icon: Heart
     },
     {
       id: 9,
@@ -156,7 +219,6 @@ const PortfolioPage = () => {
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
       thumbnail: "/images/portfolio/Openingsdans.webp",
       videoPath: "/videos/portfolio/Openingsdans.webm",
-      icon: Music
     }
   ];
 
@@ -219,6 +281,7 @@ const PortfolioPage = () => {
 
   return (
     <div>
+      {/* Header */}
       <section className="bg-beige">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto py-20">
@@ -234,6 +297,7 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Showreel Section */}
       <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -256,7 +320,7 @@ const PortfolioPage = () => {
                     frameBorder="0"
                     title={video.title}
                     aria-hidden="true"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
@@ -270,6 +334,7 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Workflow Process Section */}
       <section className="py-16 lg:py-24 bg-beige/20">
         <div className="container-custom">
           <div className="text-center mb-16">
@@ -281,7 +346,6 @@ const PortfolioPage = () => {
 
           <div className="space-y-16">
             {workflowSteps.map((step, index) => {
-              const IconComponent = step.icon;
               const isEven = index % 2 === 0;
               
               return (
@@ -299,24 +363,48 @@ const PortfolioPage = () => {
                     </p>
                   </div>
 
+                  {/* Video */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
                       <video
-                        ref={el => { videoRefs.current[index] = el; if (el) el.muted = mutedStates[index]; }}
-                        className="w-full h-80 object-cover"
+                        ref={el => {
+                          videoRefs.current[index] = el;
+                          if (el) el.muted = mutedStates[index];
+                        }}
+                        className="w-full aspect-video object-cover"
                         muted={mutedStates[index]}
                         preload="auto"
-                        poster={step.thumbnail}
+                        poster={step.thumbnail} // Use thumbnail as placeholder
                         playsInline
-                        onClick={isMobile ? () => handlePlayVideo(index) : undefined}
+                        onClick={() => isMobile && handlePlayPause(index)}
                       >
                         <source src={step.videoPath} type="video/webm" />
                         Your browser does not support the video tag.
                       </video>
+                      
+                      {/* Mobile Play/Pause Button */}
+                      {isMobile && (
+                        <button
+                          type="button"
+                          aria-label={isPlaying[index] ? 'Pause video' : 'Play video'}
+                          onClick={() => handlePlayPause(index)}
+                          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-4 transition-opacity duration-300 focus:outline-none shadow-lg ${
+                            showPlayButton[index] ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                          }`}
+                        >
+                          {isPlaying[index] ? (
+                            <Pause className="w-8 h-8" />
+                          ) : (
+                            <Play className="w-8 h-8" />
+                          )}
+                        </button>
+                      )}
+                      
+                      {/* Custom volume button */}
                       <button
                         type="button"
                         aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
-                        onClick={(e) => { e.stopPropagation(); handleToggleMute(index); }}
+                        onClick={() => handleToggleMute(index)}
                         className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
                         tabIndex={0}
                       >
@@ -326,16 +414,6 @@ const PortfolioPage = () => {
                           <Volume2 className="w-4 h-4" />
                         )}
                       </button>
-                      {isMobile && (
-                        <button
-                          type="button"
-                          aria-label="Play video"
-                          onClick={(e) => { e.stopPropagation(); handlePlayVideo(index); }}
-                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 focus:outline-none shadow-lg"
-                        >
-                          <Play className="w-6 h-6" />
-                        </button>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -345,6 +423,7 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Same Day Edit Section */}
       <section className="py-16 bg-beige/10">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
