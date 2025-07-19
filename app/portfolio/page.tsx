@@ -6,6 +6,7 @@ import { Play, Heart, Camera, Users, Music, Volume2, VolumeX, Pause } from 'luci
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
+  const [playingStates, setPlayingStates] = useState<boolean[]>(Array(9).fill(false));
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -24,50 +25,100 @@ const PortfolioPage = () => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
 
+      // Add event listeners for play/pause events
+      const handlePlay = () => {
+        setPlayingStates((prev) => {
+          const newStates = [...prev];
+          newStates[index] = true;
+          return newStates;
+        });
+      };
+
+      const handlePause = () => {
+        setPlayingStates((prev) => {
+          const newStates = [...prev];
+          newStates[index] = false;
+          return newStates;
+        });
+      };
+
+      video.addEventListener('play', handlePlay);
+      video.addEventListener('pause', handlePause);
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              video.play().catch((error) => {
-                console.log(`Auto-play was prevented for video ${index}:`, error);
-              });
+            if (!isMobile) {
+              // Desktop behavior: auto-play when in view
+              if (entry.isIntersecting) {
+                video.play().catch((error) => {
+                  console.log(`Auto-play was prevented for video ${index}:`, error);
+                });
+              } else {
+                video.pause();
+              }
             } else {
-              video.pause();
+              // Mobile: pause when out of view
+              if (!entry.isIntersecting) {
+                video.pause();
+              }
             }
           });
         },
         {
           threshold: 0.15,
-          rootMargin: '-40% 0px -40% 0px', // Play when video is centered in viewport
+          rootMargin: '-40% 0px -40% 0px',
         }
       );
 
       observer.observe(video);
       observers.push(observer);
+
+      // Cleanup function
+      return () => {
+        video.removeEventListener('play', handlePlay);
+        video.removeEventListener('pause', handlePause);
+      };
     });
 
     return () => {
       observers.forEach(observer => observer.disconnect());
     };
-  }, []);
+  }, [isMobile]);
 
   const handleToggleMute = (index: number) => {
     setMutedStates((prev) => {
       const newStates = [...prev];
       newStates[index] = !newStates[index];
-      // Actually update the video element
       const video = videoRefs.current[index];
       if (video) video.muted = newStates[index];
       return newStates;
     });
   };
 
-  // Helper function to get video path based on device
-  const getVideoPath = (baseName: string) => {
-    if (isMobile) {
-      return `/videos/portfolio/mp4/${baseName}.mp4`;
+  const handleVideoClick = (index: number) => {
+    if (!isMobile) return; // Only handle clicks on mobile
+
+    const video = videoRefs.current[index];
+    if (!video) return;
+
+    if (video.paused) {
+      video.play().catch((error) => {
+        console.log(`Play was prevented for video ${index}:`, error);
+      });
+      setPlayingStates((prev) => {
+        const newStates = [...prev];
+        newStates[index] = true;
+        return newStates;
+      });
+    } else {
+      video.pause();
+      setPlayingStates((prev) => {
+        const newStates = [...prev];
+        newStates[index] = false;
+        return newStates;
+      });
     }
-    return `/videos/portfolio/${baseName}.webm`;
   };
 
   // Showreel videos
@@ -207,6 +258,14 @@ const PortfolioPage = () => {
     }
   ];
 
+  const getVideoPath = (baseName: string) => {
+    if (isMobile) {
+      return `/videos/portfolio/${baseName}.mp4`;
+    } else {
+      return `/videos/portfolio/${baseName}.webm`;
+    }
+  };
+
   return (
     <div>
       {/* Header */}
@@ -238,7 +297,6 @@ const PortfolioPage = () => {
             </p>
           </div>
 
-          {/* 3 Videos in Grid - Styled like Homepage Showreel */}
           <div className="grid lg:grid-cols-3 gap-8">
             {showreelVideos.map((video, index) => (
               <div key={video.id} className="group">
@@ -254,7 +312,6 @@ const PortfolioPage = () => {
                   />
                 </div>
                 
-                {/* Video Info */}
                 <div className="mt-4 text-center">
                   <h3 className="font-playfair font-semibold text-lg mb-1">{video.title}</h3>
                 </div>
@@ -283,7 +340,6 @@ const PortfolioPage = () => {
                   key={step.id}
                   className={`grid lg:grid-cols-2 gap-12 items-center`}
                 >
-                  {/* Content */}
                   <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'} text-center`}>
                     <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-black">
                       {step.title}
@@ -294,19 +350,25 @@ const PortfolioPage = () => {
                     </p>
                   </div>
 
-                  {/* Video */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
                       <div className="aspect-video">
                         <video
                           ref={el => {
                             videoRefs.current[index] = el;
-                            if (el) el.muted = mutedStates[index];
+                            if (el) {
+                              el.muted = mutedStates[index];
+                              if (isMobile) {
+                                el.playsInline = true;
+                                el.preload = "metadata";
+                              }
+                            }
                           }}
                           className="w-full h-full object-cover"
                           muted={mutedStates[index]}
-                          preload="auto"
+                          preload={isMobile ? "metadata" : "auto"}
                           playsInline
+                          onClick={() => handleVideoClick(index)}
                         >
                           {isMobile ? (
                             <source src={getVideoPath(step.baseName)} type="video/mp4" />
@@ -316,7 +378,25 @@ const PortfolioPage = () => {
                           Your browser does not support the video tag.
                         </video>
                       </div>
-                      {/* Custom volume button */}
+                      
+                      {/* Mobile play/pause button */}
+                      {isMobile && (
+                        <button
+                          type="button"
+                          aria-label={playingStates[index] ? 'Pause video' : 'Play video'}
+                          onClick={() => handleVideoClick(index)}
+                          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-4 transition-opacity duration-300 focus:outline-none shadow-lg
+                            ${playingStates[index] ? 'opacity-0' : 'opacity-100'}`}
+                        >
+                          {playingStates[index] ? (
+                            <Pause className="w-8 h-8" />
+                          ) : (
+                            <Play className="w-8 h-8" />
+                          )}
+                        </button>
+                      )}
+
+                      {/* Volume button - for both mobile and desktop */}
                       <button
                         type="button"
                         aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
