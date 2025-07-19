@@ -100,7 +100,7 @@ const Navigation = () => {
                 <Link 
                   href={item.href} 
                   onClick={() => setIsOpen(false)} 
-                  className={`text-lg transition-colors px-6 py-3 block ${
+                  className={`text-base transition-colors px-6 py-3 block ${
                     pathname === item.href
                       ? 'text-white bg-white/10'
                       : 'text-white hover:text-gold'

@@ -6,8 +6,24 @@ import { Play, Heart, Camera, Users, Music, Volume2, VolumeX } from 'lucide-reac
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    // Only set up Intersection Observer on desktop
+    if (isMobile) return;
+
     const observers: IntersectionObserver[] = [];
 
     videoRefs.current.forEach((video, index) => {
@@ -27,7 +43,7 @@ const PortfolioPage = () => {
         },
         {
           threshold: 0.15,
-          rootMargin: '-40% 0px -40% 0px', // Play when video is centered in viewport
+          rootMargin: '-40% 0px -40% 0px',
         }
       );
 
@@ -38,13 +54,12 @@ const PortfolioPage = () => {
     return () => {
       observers.forEach(observer => observer.disconnect());
     };
-  }, []);
+  }, [isMobile]);
 
   const handleToggleMute = (index: number) => {
     setMutedStates((prev) => {
       const newStates = [...prev];
       newStates[index] = !newStates[index];
-      // Actually update the video element
       const video = videoRefs.current[index];
       if (video) video.muted = newStates[index];
       return newStates;
@@ -80,7 +95,7 @@ const PortfolioPage = () => {
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
       thumbnail: "/images/portfolio/Startvandedag.webp",
-      videoPath: "/videos/portfolio/Startvandedag.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Startvandedag.webm",
       icon: Heart
     },
     {
@@ -88,7 +103,7 @@ const PortfolioPage = () => {
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
       thumbnail: "/images/portfolio/Firstlook.webp",
-      videoPath: "/videos/portfolio/Firstlook.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Firstlook.webm",
       icon: Camera
     },
     {
@@ -96,7 +111,7 @@ const PortfolioPage = () => {
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
       thumbnail: "/images/portfolio/Zegja.webp",
-      videoPath: "/videos/portfolio/Zegja.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Zegja.webm",
       icon: Heart
     },
     {
@@ -104,7 +119,7 @@ const PortfolioPage = () => {
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
       thumbnail: "/images/portfolio/Fotoshoot.webp",
-      videoPath: "/videos/portfolio/Fotoshoot.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Fotoshoot.webm",
       icon: Camera
     },
     {
@@ -112,7 +127,7 @@ const PortfolioPage = () => {
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
       thumbnail: "/images/portfolio/Geloftes.webp",
-      videoPath: "/videos/portfolio/Geloftes.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Geloftes.webm",
       icon: Heart
     },
     {
@@ -120,7 +135,7 @@ const PortfolioPage = () => {
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
       thumbnail: "/images/portfolio/FamilieVrienden.webp",
-      videoPath: "/videos/portfolio/FamilieVrienden.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/FamilieVrienden.webm",
       icon: Users
     },
     {
@@ -128,7 +143,7 @@ const PortfolioPage = () => {
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
       thumbnail: "/images/portfolio/Intrede.webp",
-      videoPath: "/videos/portfolio/Intrede.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Intrede.webm",
       icon: Music
     },
     {
@@ -136,7 +151,7 @@ const PortfolioPage = () => {
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
       thumbnail: "/images/portfolio/Dessert.webp",
-      videoPath: "/videos/portfolio/Dessert.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Dessert.webm",
       icon: Heart
     },
     {
@@ -144,65 +159,8 @@ const PortfolioPage = () => {
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
       thumbnail: "/images/portfolio/Openingsdans.webp",
-      videoPath: "/videos/portfolio/Openingsdans.webm", // Easy to replace later
+      videoPath: "/videos/portfolio/Openingsdans.webm",
       icon: Music
-    }
-  ];
-
-  const portfolioVideos = [
-    {
-      id: 1,
-      title: "Sarah & Michael",
-      style: "romantic",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      description: "A romantic summer wedding in Tuscany with breathtaking vineyard views",
-      duration: "4:32",
-      location: "Tuscany, Italy"
-    },
-    {
-      id: 2,
-      title: "Emma & James",
-      style: "cinematic",
-      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      description: "An intimate ceremony in the mountains with stunning landscapes",
-      duration: "6:15",
-      location: "Swiss Alps"
-    },
-    {
-      id: 3,
-      title: "Lisa & David",
-      style: "documentary",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      description: "A joyful celebration with family and friends in a beautiful garden",
-      duration: "5:48",
-      location: "English Countryside"
-    },
-    {
-      id: 4,
-      title: "Anna & Thomas",
-      style: "romantic",
-      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      description: "A fairytale wedding in a historic castle",
-      duration: "7:22",
-      location: "Loire Valley, France"
-    },
-    {
-      id: 5,
-      title: "Maria & Carlos",
-      style: "cinematic",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      description: "A passionate Spanish wedding with flamenco traditions",
-      duration: "5:33",
-      location: "Seville, Spain"
-    },
-    {
-      id: 6,
-      title: "Sophie & Alex",
-      style: "documentary",
-      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
-      description: "A bohemian beach wedding at sunset",
-      duration: "4:17",
-      location: "Santorini, Greece"
     }
   ];
 
@@ -294,37 +252,57 @@ const PortfolioPage = () => {
                     </p>
                   </div>
 
-                  {/* Video */}
+                  {/* Video/Image */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
-                      <video
-                        ref={el => {
-                          videoRefs.current[index] = el;
-                          if (el) el.muted = mutedStates[index];
-                        }}
-                        className="w-full h-80 object-cover"
-                        muted={mutedStates[index]}
-                        preload="auto"
-                        poster={step.thumbnail} // Use thumbnail as placeholder
-                        playsInline
-                      >
-                        <source src={step.videoPath} type="video/webm" />
-                        Your browser does not support the video tag.
-                      </video>
-                      {/* Custom volume button */}
-                      <button
-                        type="button"
-                        aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
-                        onClick={() => handleToggleMute(index)}
-                        className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
-                        tabIndex={0}
-                      >
-                        {mutedStates[index] ? (
-                          <VolumeX className="w-4 h-4" />
-                        ) : (
-                          <Volume2 className="w-4 h-4" />
-                        )}
-                      </button>
+                      {isMobile ? (
+                        // Mobile: Show thumbnail image instead of video
+                        <div className="relative">
+                          <img
+                            src={step.thumbnail}
+                            alt={step.title}
+                            className="w-full h-80 object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                            <div className="bg-white/90 rounded-full p-4">
+                              <Play className="w-8 h-8 text-black" />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        // Desktop: Show video with autoplay
+                        <video
+                          ref={el => {
+                            videoRefs.current[index] = el;
+                            if (el) el.muted = mutedStates[index];
+                          }}
+                          className="w-full h-80 object-cover"
+                          muted={mutedStates[index]}
+                          preload="auto"
+                          poster={step.thumbnail}
+                          playsInline
+                        >
+                          <source src={step.videoPath} type="video/webm" />
+                          Your browser does not support the video tag.
+                        </video>
+                      )}
+                      
+                      {/* Custom volume button - only show on desktop */}
+                      {!isMobile && (
+                        <button
+                          type="button"
+                          aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
+                          onClick={() => handleToggleMute(index)}
+                          className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
+                          tabIndex={0}
+                        >
+                          {mutedStates[index] ? (
+                            <VolumeX className="w-4 h-4" />
+                          ) : (
+                            <Volume2 className="w-4 h-4" />
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
