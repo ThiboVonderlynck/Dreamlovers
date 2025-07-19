@@ -9,22 +9,10 @@ const PortfolioPage = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
+    const observers: IntersectionObserver[] = [];
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768); // Adjust threshold as needed
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    // Only set up Intersection Observer on desktop
-    if (isMobile) return;
-
-    const observers: IntersectionObserver[] = [];
 
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
@@ -32,11 +20,11 @@ const PortfolioPage = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && !isMobile) {
               video.play().catch((error) => {
                 console.log(`Auto-play was prevented for video ${index}:`, error);
               });
-            } else {
+            } else if (!isMobile) {
               video.pause();
             }
           });
@@ -53,6 +41,7 @@ const PortfolioPage = () => {
 
     return () => {
       observers.forEach(observer => observer.disconnect());
+      window.removeEventListener('resize', checkMobile);
     };
   }, [isMobile]);
 
@@ -66,7 +55,15 @@ const PortfolioPage = () => {
     });
   };
 
-  // Showreel videos
+  const handlePlayVideo = (index: number) => {
+    const video = videoRefs.current[index];
+    if (video && isMobile) {
+      video.play().catch((error) => {
+        console.log(`Play was prevented for video ${index}:`, error);
+      });
+    }
+  };
+
   const showreelVideos = [
     {
       id: 1,
@@ -88,7 +85,6 @@ const PortfolioPage = () => {
     }
   ];
 
-  // Workflow steps with Dutch descriptions
   const workflowSteps = [
     {
       id: 1,
@@ -164,9 +160,65 @@ const PortfolioPage = () => {
     }
   ];
 
+  const portfolioVideos = [
+    {
+      id: 1,
+      title: "Sarah & Michael",
+      style: "romantic",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A romantic summer wedding in Tuscany with breathtaking vineyard views",
+      duration: "4:32",
+      location: "Tuscany, Italy"
+    },
+    {
+      id: 2,
+      title: "Emma & James",
+      style: "cinematic",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "An intimate ceremony in the mountains with stunning landscapes",
+      duration: "6:15",
+      location: "Swiss Alps"
+    },
+    {
+      id: 3,
+      title: "Lisa & David",
+      style: "documentary",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A joyful celebration with family and friends in a beautiful garden",
+      duration: "5:48",
+      location: "English Countryside"
+    },
+    {
+      id: 4,
+      title: "Anna & Thomas",
+      style: "romantic",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A fairytale wedding in a historic castle",
+      duration: "7:22",
+      location: "Loire Valley, France"
+    },
+    {
+      id: 5,
+      title: "Maria & Carlos",
+      style: "cinematic",
+      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A passionate Spanish wedding with flamenco traditions",
+      duration: "5:33",
+      location: "Seville, Spain"
+    },
+    {
+      id: 6,
+      title: "Sophie & Alex",
+      style: "documentary",
+      thumbnail: "https://images.pexels.com/photos/1488313/pexels-photo-1488313.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+      description: "A bohemian beach wedding at sunset",
+      duration: "4:17",
+      location: "Santorini, Greece"
+    }
+  ];
+
   return (
     <div>
-      {/* Header */}
       <section className="bg-beige">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto py-20">
@@ -182,7 +234,6 @@ const PortfolioPage = () => {
         </div>
       </section>
 
-      {/* Showreel Section */}
       <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -195,7 +246,6 @@ const PortfolioPage = () => {
             </p>
           </div>
 
-          {/* 3 Videos in Grid - Styled like Homepage Showreel */}
           <div className="grid lg:grid-cols-3 gap-8">
             {showreelVideos.map((video, index) => (
               <div key={video.id} className="group">
@@ -206,12 +256,11 @@ const PortfolioPage = () => {
                     frameBorder="0"
                     title={video.title}
                     aria-hidden="true"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 </div>
                 
-                {/* Video Info */}
                 <div className="mt-4 text-center">
                   <h3 className="font-playfair font-semibold text-lg mb-1">{video.title}</h3>
                 </div>
@@ -221,7 +270,6 @@ const PortfolioPage = () => {
         </div>
       </section>
 
-      {/* Workflow Process Section */}
       <section className="py-16 lg:py-24 bg-beige/20">
         <div className="container-custom">
           <div className="text-center mb-16">
@@ -241,7 +289,6 @@ const PortfolioPage = () => {
                   key={step.id}
                   className={`grid lg:grid-cols-2 gap-12 items-center`}
                 >
-                  {/* Content */}
                   <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'} text-center`}>
                     <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-black">
                       {step.title}
@@ -252,55 +299,41 @@ const PortfolioPage = () => {
                     </p>
                   </div>
 
-                  {/* Video/Image */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
-                      {isMobile ? (
-                        // Mobile: Show thumbnail image instead of video
-                        <div className="relative">
-                          <img
-                            src={step.thumbnail}
-                            alt={step.title}
-                            className="w-full h-80 object-cover"
-                          />
-                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                            <div className="bg-white/90 rounded-full p-4">
-                              <Play className="w-8 h-8 text-black" />
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        // Desktop: Show video with autoplay
-                        <video
-                          ref={el => {
-                            videoRefs.current[index] = el;
-                            if (el) el.muted = mutedStates[index];
-                          }}
-                          className="w-full h-80 object-cover"
-                          muted={mutedStates[index]}
-                          preload="auto"
-                          poster={step.thumbnail}
-                          playsInline
-                        >
-                          <source src={step.videoPath} type="video/webm" />
-                          Your browser does not support the video tag.
-                        </video>
-                      )}
-                      
-                      {/* Custom volume button - only show on desktop */}
-                      {!isMobile && (
+                      <video
+                        ref={el => { videoRefs.current[index] = el; if (el) el.muted = mutedStates[index]; }}
+                        className="w-full h-80 object-cover"
+                        muted={mutedStates[index]}
+                        preload="auto"
+                        poster={step.thumbnail}
+                        playsInline
+                        onClick={isMobile ? () => handlePlayVideo(index) : undefined}
+                      >
+                        <source src={step.videoPath} type="video/webm" />
+                        Your browser does not support the video tag.
+                      </video>
+                      <button
+                        type="button"
+                        aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
+                        onClick={(e) => { e.stopPropagation(); handleToggleMute(index); }}
+                        className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
+                        tabIndex={0}
+                      >
+                        {mutedStates[index] ? (
+                          <VolumeX className="w-4 h-4" />
+                        ) : (
+                          <Volume2 className="w-4 h-4" />
+                        )}
+                      </button>
+                      {isMobile && (
                         <button
                           type="button"
-                          aria-label={mutedStates[index] ? 'Unmute video' : 'Mute video'}
-                          onClick={() => handleToggleMute(index)}
-                          className="absolute bottom-4 right-4 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 transition-all opacity-100 focus:outline-none shadow-lg"
-                          tabIndex={0}
+                          aria-label="Play video"
+                          onClick={(e) => { e.stopPropagation(); handlePlayVideo(index); }}
+                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 transition-all opacity-0 group-hover:opacity-100 focus:outline-none shadow-lg"
                         >
-                          {mutedStates[index] ? (
-                            <VolumeX className="w-4 h-4" />
-                          ) : (
-                            <Volume2 className="w-4 h-4" />
-                          )}
+                          <Play className="w-6 h-6" />
                         </button>
                       )}
                     </div>
@@ -312,7 +345,6 @@ const PortfolioPage = () => {
         </div>
       </section>
 
-      {/* Same Day Edit Section */}
       <section className="py-16 bg-beige/10">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
