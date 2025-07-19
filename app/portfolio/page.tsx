@@ -14,7 +14,7 @@ const PortfolioPage = () => {
     // Detect mobile devices and tablets
     const checkMobile = () => {
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      const isTabletOrMobile = window.innerWidth <= 1024 || /Mobi|Android|iPad|iPhone/i.test(navigator.userAgent);
+      const isTabletOrMobile = /Mobi|Android|iPad|iPhone/i.test(navigator.userAgent) || window.innerWidth <= 1200;
       setIsMobile(isTouchDevice && isTabletOrMobile);
     };
     checkMobile();
