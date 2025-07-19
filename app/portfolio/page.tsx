@@ -6,8 +6,6 @@ import { Play, Heart, Camera, Users, Music, Volume2, VolumeX, Pause } from 'luci
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
-  const [isPlaying, setIsPlaying] = useState<boolean[]>(Array(9).fill(false));
-  const [showPlayButton, setShowPlayButton] = useState<boolean[]>(Array(9).fill(true));
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -29,56 +27,18 @@ const PortfolioPage = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (!isMobile) {
-              // Desktop behavior: auto-play when in view
-              if (entry.isIntersecting) {
-                video.play().catch((error) => {
-                  console.log(`Auto-play was prevented for video ${index}:`, error);
-                });
-                setIsPlaying((prev) => {
-                  const newStates = [...prev];
-                  newStates[index] = true;
-                  return newStates;
-                });
-                setShowPlayButton((prev) => {
-                  const newStates = [...prev];
-                  newStates[index] = false;
-                  return newStates;
-                });
-              } else {
-                video.pause();
-                setIsPlaying((prev) => {
-                  const newStates = [...prev];
-                  newStates[index] = false;
-                  return newStates;
-                });
-                setShowPlayButton((prev) => {
-                  const newStates = [...prev];
-                  newStates[index] = true;
-                  return newStates;
-                });
-              }
+            if (entry.isIntersecting) {
+              video.play().catch((error) => {
+                console.log(`Auto-play was prevented for video ${index}:`, error);
+              });
             } else {
-              // Mobile: pause when out of view
-              if (!entry.isIntersecting) {
-                video.pause();
-                setIsPlaying((prev) => {
-                  const newStates = [...prev];
-                  newStates[index] = false;
-                  return newStates;
-                });
-                setShowPlayButton((prev) => {
-                  const newStates = [...prev];
-                  newStates[index] = true;
-                  return newStates;
-                });
-              }
+              video.pause();
             }
           });
         },
         {
           threshold: 0.15,
-          rootMargin: '-40% 0px -40% 0px',
+          rootMargin: '-40% 0px -40% 0px', // Play when video is centered in viewport
         }
       );
 
@@ -89,7 +49,7 @@ const PortfolioPage = () => {
     return () => {
       observers.forEach(observer => observer.disconnect());
     };
-  }, [isMobile]);
+  }, []);
 
   const handleToggleMute = (index: number) => {
     setMutedStates((prev) => {
@@ -102,35 +62,12 @@ const PortfolioPage = () => {
     });
   };
 
-  const handlePlayPause = (index: number) => {
-    const video = videoRefs.current[index];
-    if (!video) return;
-
-    if (video.paused) {
-      video.play();
-      setIsPlaying(prev => {
-        const newStates = [...prev];
-        newStates[index] = true;
-        return newStates;
-      });
-      setShowPlayButton(prev => {
-        const newStates = [...prev];
-        newStates[index] = false;
-        return newStates;
-      });
-    } else {
-      video.pause();
-      setIsPlaying(prev => {
-        const newStates = [...prev];
-        newStates[index] = false;
-        return newStates;
-      });
-      setShowPlayButton(prev => {
-        const newStates = [...prev];
-        newStates[index] = true;
-        return newStates;
-      });
+  // Helper function to get video path based on device
+  const getVideoPath = (baseName: string) => {
+    if (isMobile) {
+      return `/videos/portfolio/mp4/${baseName}.mp4`;
     }
+    return `/videos/portfolio/${baseName}.webm`;
   };
 
   // Showreel videos
@@ -162,63 +99,63 @@ const PortfolioPage = () => {
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
       thumbnail: "/images/portfolio/Startvandedag.webp",
-      videoPath: "/videos/portfolio/Startvandedag.webm",
+      baseName: "Startvandedag",
     },
     {
       id: 2,
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
       thumbnail: "/images/portfolio/Firstlook.webp",
-      videoPath: "/videos/portfolio/Firstlook.webm",
+      baseName: "Firstlook",
     },
     {
       id: 3,
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
       thumbnail: "/images/portfolio/Zegja.webp",
-      videoPath: "/videos/portfolio/Zegja.webm",
+      baseName: "Zegja",
     },
     {
       id: 4,
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
       thumbnail: "/images/portfolio/Fotoshoot.webp",
-      videoPath: "/videos/portfolio/Fotoshoot.webm",
+      baseName: "Fotoshoot",
     },
     {
       id: 5,
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
       thumbnail: "/images/portfolio/Geloftes.webp",
-      videoPath: "/videos/portfolio/Geloftes.webm",
+      baseName: "Geloftes",
     },
     {
       id: 6,
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
       thumbnail: "/images/portfolio/FamilieVrienden.webp",
-      videoPath: "/videos/portfolio/FamilieVrienden.webm",
+      baseName: "FamilieVrienden",
     },
     {
       id: 7,
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
       thumbnail: "/images/portfolio/Intrede.webp",
-      videoPath: "/videos/portfolio/Intrede.webm",
+      baseName: "Intrede",
     },
     {
       id: 8,
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
       thumbnail: "/images/portfolio/Dessert.webp",
-      videoPath: "/videos/portfolio/Dessert.webm",
+      baseName: "Dessert",
     },
     {
       id: 9,
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
       thumbnail: "/images/portfolio/Openingsdans.webp",
-      videoPath: "/videos/portfolio/Openingsdans.webm",
+      baseName: "Openingsdans",
     }
   ];
 
@@ -310,6 +247,7 @@ const PortfolioPage = () => {
             </p>
           </div>
 
+          {/* 3 Videos in Grid - Styled like Homepage Showreel */}
           <div className="grid lg:grid-cols-3 gap-8">
             {showreelVideos.map((video, index) => (
               <div key={video.id} className="group">
@@ -325,6 +263,7 @@ const PortfolioPage = () => {
                   />
                 </div>
                 
+                {/* Video Info */}
                 <div className="mt-4 text-center">
                   <h3 className="font-playfair font-semibold text-lg mb-1">{video.title}</h3>
                 </div>
@@ -353,6 +292,7 @@ const PortfolioPage = () => {
                   key={step.id}
                   className={`grid lg:grid-cols-2 gap-12 items-center`}
                 >
+                  {/* Content */}
                   <div className={`${isEven ? 'lg:order-1' : 'lg:order-2'} text-center`}>
                     <h3 className="text-2xl md:text-3xl font-playfair font-bold mb-4 text-black">
                       {step.title}
@@ -371,34 +311,19 @@ const PortfolioPage = () => {
                           videoRefs.current[index] = el;
                           if (el) el.muted = mutedStates[index];
                         }}
-                        className="w-full aspect-video object-cover"
+                        className="w-full h-80 object-cover"
                         muted={mutedStates[index]}
                         preload="auto"
+                        poster={step.thumbnail} // Use thumbnail as placeholder
                         playsInline
-                        onClick={() => isMobile && handlePlayPause(index)}
                       >
-                        <source src={step.videoPath} type="video/webm" />
+                        {isMobile ? (
+                          <source src={getVideoPath(step.baseName)} type="video/mp4" />
+                        ) : (
+                          <source src={getVideoPath(step.baseName)} type="video/webm" />
+                        )}
                         Your browser does not support the video tag.
                       </video>
-                      
-                      {/* Mobile Play/Pause Button */}
-                      {isMobile && (
-                        <button
-                          type="button"
-                          aria-label={isPlaying[index] ? 'Pause video' : 'Play video'}
-                          onClick={() => handlePlayPause(index)}
-                          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-black/60 hover:bg-black/80 text-white rounded-full p-4 transition-opacity duration-300 focus:outline-none shadow-lg ${
-                            showPlayButton[index] ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                          }`}
-                        >
-                          {isPlaying[index] ? (
-                            <Pause className="w-8 h-8" />
-                          ) : (
-                            <Play className="w-8 h-8" />
-                          )}
-                        </button>
-                      )}
-                      
                       {/* Custom volume button */}
                       <button
                         type="button"
