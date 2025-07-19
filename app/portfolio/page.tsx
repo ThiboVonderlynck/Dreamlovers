@@ -70,7 +70,7 @@ const PortfolioPage = () => {
               });
 
               if (!isMobile) {
-                // Desktop: auto-play when in view
+                // Desktop: auto-play when in view (but later)
                 video.play().catch((error) => {
                   console.log(`Auto-play was prevented for video ${videoIndex}:`, error);
                 });
@@ -89,8 +89,8 @@ const PortfolioPage = () => {
           });
         },
         {
-          threshold: 0.3, // 30% of video must be visible
-          rootMargin: '-10% 0px -10% 0px', // Slightly smaller margin for better control
+          threshold: isMobile ? 0.3 : 0.6, // Higher threshold for desktop - video must be 60% visible
+          rootMargin: isMobile ? '-10% 0px -10% 0px' : '-20% 0px -20% 0px', // Larger margin for desktop
         }
       );
 
@@ -310,7 +310,7 @@ const PortfolioPage = () => {
                   </div>
 
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
-                    <div className="relative group overflow-hidden rounded-lg">
+                    <div className="relative group overflow-hidden">
                       <div className="aspect-video">
                         <video
                           ref={el => {
@@ -363,7 +363,6 @@ const PortfolioPage = () => {
                       {/* In view indicator (for debugging) */}
                       {process.env.NODE_ENV === 'development' && (
                         <div className="absolute top-4 left-4 z-10 bg-black/60 text-white text-xs px-2 py-1 rounded">
-                          {isInView[index] ? 'In View' : 'Out of View'}
                         </div>
                       )}
                     </div>
