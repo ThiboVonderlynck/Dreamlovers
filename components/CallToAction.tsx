@@ -18,7 +18,7 @@ const CallToAction = () => {
             Laten we jullie Liefdesverhaal creëren
           </h2>
           
-          <p className="text-base text-black w-1/2 mx-auto mb-8 leading-relaxed">
+          <p className="text-base text-black xl:w-1/2 mx-auto mb-8 leading-relaxed">
             Jullie trouwdag verdient het om herinnerd te worden in al zijn schoonheid. 
             Laat ons de magie, de emotie en de vreugde vastleggen die jullie verhaal uniek maken.
           </p>

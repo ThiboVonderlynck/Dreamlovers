@@ -11,7 +11,7 @@ const AboutSection = () => {
           <div>
             <div className="mb-6">
               <span className="text-subtitle text-beige">Trouwvideografie</span>
-              <h2 className="text-4xl md:text-5xl font-playfair font-bold mt-2 mb-6 text-white leading-relaxed">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-playfair font-bold mt-2 mb-6 text-white leading-relaxed">
                 Jullie dag, filmisch in beeld gebracht
               </h2>
             </div>
@@ -66,12 +66,12 @@ const AboutSection = () => {
                 alt="Wedding couple embracing"
                 width={800}
                 height={600}
-                className="w-full h-[600px] object-cover"
+                className="w-full aspect-[4/3] sm:h-[600px] sm:aspect-auto object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
               
               {/* Floating card */}
-              <div className="absolute -bottom-8 -left-8 bg-white p-6 max-w-xs">
+              <div className="absolute -bottom-8 -left-8 bg-white p-6 max-w-xs lg:block hidden">
                 <div className="flex items-center mb-2">
                   <Heart className="h-5 w-5 text-gold mr-2" />
                   <span className="font-playfair font-semibold">Onze Belofte</span>
@@ -80,6 +80,17 @@ const AboutSection = () => {
                   Wij leggen niet alleen de momenten vast, maar ook de emoties die jullie dag onvergetelijk maken.
                 </p>
               </div>
+            </div>
+            
+            {/* Mobile floating card - positioned underneath and centered */}
+            <div className="lg:hidden -mt-16 bg-white p-6 max-w-xs mx-auto relative z-10">
+              <div className="flex items-center mb-2">
+                <Heart className="h-5 w-5 text-gold mr-2" />
+                <span className="font-playfair font-semibold">Onze Belofte</span>
+              </div>
+              <p className="text-sm text-body">
+                Wij leggen niet alleen de momenten vast, maar ook de emoties die jullie dag onvergetelijk maken.
+              </p>
             </div>
           </div>
         </div>

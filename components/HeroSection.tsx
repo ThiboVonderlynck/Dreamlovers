@@ -23,11 +23,11 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 w-full">
         <div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair font-regular mb-6 leading-tight tracking-wide whitespace-nowrap">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-playfair font-regular mb-6 leading-tight tracking-wide">
             CINEMATISCHE TROUWFILM
           </h1>
           
-          <p className="text-base md:text-xl mb-8 text-white font-medium max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-xl mb-8 text-white font-medium max-w-2xl mx-auto leading-relaxed">
             "Jullie trouwdag, voor altijd in beeld gebracht."
           </p>
           

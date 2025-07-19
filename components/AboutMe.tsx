@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 const AboutMe = () => {
   return (
-    <section className="py-16 lg:py-24 relative">
+    <section className="py-24 relative">
       {/* Background that doesn't extend full width - cut off on left */}
-      <div className="absolute inset-0 bg-beige ml-[20%] lg:ml-[25%]"></div>
+      <div className="absolute inset-0 bg-beige ml-[0%] lg:ml-[20%] lg:ml-[25%]"></div>
       
       <div className="container-custom relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">

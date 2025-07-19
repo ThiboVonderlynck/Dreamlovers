@@ -81,7 +81,7 @@ const Navigation = () => {
         <div className={`fixed top-0 left-0 h-full w-[300px] bg-black text-white z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
-          <div className="flex justify-between items-center px-6 py-8 border-b border-gray-700">
+          <div className="flex justify-between items-center px-6 py-8 border-b border-white/20">
             <Link href="/" className="text-4xl font-dancing font-bold text-white">
               Dreamlovers
             </Link>
@@ -96,7 +96,7 @@ const Navigation = () => {
           
           <ul className="flex flex-col">
             {navItems.map((item) => (
-              <li key={item.name} className="border-b border-gray-700">
+              <li key={item.name} className="border-b border-white/20">
                 <Link 
                   href={item.href} 
                   onClick={() => setIsOpen(false)} 

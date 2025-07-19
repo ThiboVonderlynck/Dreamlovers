@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <footer className="bg-black text-white py-12 text-base">
             <div className="container-custom">
-                <div className="flex flex-col lg:flex-row justify-between gap-8 mb-8">
+                <div className="flex flex-col sm:flex-row justify-between gap-8 mb-8">
                     {/* Left Column - Brand */}
                     <div className="flex-1 max-w-md">
                         <Link href="/" className="text-4xl font-dancing font-bold text-white block mb-2">
@@ -31,7 +31,7 @@ const Footer = () => {
                     </div>
 
                     {/* Right Side - Navigation and Contact grouped */}
-                    <div className="flex flex-col md:flex-row gap-32">
+                    <div className="flex flex-col sm:flex-row gap-8 sm:gap-16 lg:gap-32">
                         {/* Navigation */}
                         <div>
                             <h3 className="text-lg font-inter font-medium text-beige mb-4">Navigatie</h3>
@@ -106,11 +106,11 @@ const Footer = () => {
 
                 {/* Bottom Section - Copyright */}
                 <div className="border-t border-gray-700 pt-6">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
+                    <div className="flex flex-col sm:flex-row justify-between items-center">
                         <p className="text-gray-400 text-sm">
                             © 2025 Dreamlovers, Alle rechten voorbehouden
                         </p>
-                        <p className="text-gray-400 text-sm flex items-center mt-2 md:mt-0">
+                        <p className="text-gray-400 text-sm flex items-center mt-2 sm:mt-0">
                             Gemaakt met <Heart size={16} className="mx-1 text-beige" fill="#EAD9B3" /> voor jullie liefdesverhaal
                         </p>
                     </div>
