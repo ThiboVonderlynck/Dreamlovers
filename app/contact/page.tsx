@@ -27,9 +27,6 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="mb-16">
               <h2 className="text-3xl font-playfair font-bold mb-6">Stuur ons een bericht</h2>
-              <div className="mb-4 p-4 bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 rounded">
-                <strong>Let op:</strong> Het contactformulier werkt momenteel nog niet.
-              </div>
               <p className="text-body mb-8">
                 Vertel ons over jullie bijzondere dag en wij nemen binnen 24 uur contact met jullie op 
                 met een gepersonaliseerde offerte en beschikbaarheid.
