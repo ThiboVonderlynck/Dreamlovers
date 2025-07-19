@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Heart, Camera, Users, Music, Volume2, VolumeX, Pause } from 'lucide-react';
+import { Play, Volume2, VolumeX, Pause } from 'lucide-react';
 
 const PortfolioPage = () => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const [mutedStates, setMutedStates] = useState<boolean[]>(Array(9).fill(true));
   const [playingStates, setPlayingStates] = useState<boolean[]>(Array(9).fill(false));
   const [isMobile, setIsMobile] = useState(false);
+  const [isInView, setIsInView] = useState<boolean[]>(Array(9).fill(false));
 
   useEffect(() => {
     // Detect mobile devices
@@ -42,32 +43,52 @@ const PortfolioPage = () => {
         });
       };
 
+      const handleEnded = () => {
+        // Loop the video
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      };
+
       video.addEventListener('play', handlePlay);
       video.addEventListener('pause', handlePause);
+      video.addEventListener('ended', handleEnded);
 
+      // Create intersection observer for auto-play
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (!isMobile) {
-              // Desktop behavior: auto-play when in view
-              if (entry.isIntersecting) {
+            const videoIndex = index;
+            
+            if (entry.isIntersecting) {
+              // Video is in view
+              setIsInView((prev) => {
+                const newStates = [...prev];
+                newStates[videoIndex] = true;
+                return newStates;
+              });
+
+              if (!isMobile) {
+                // Desktop: auto-play when in view
                 video.play().catch((error) => {
-                  console.log(`Auto-play was prevented for video ${index}:`, error);
+                  console.log(`Auto-play was prevented for video ${videoIndex}:`, error);
                 });
-              } else {
-                video.pause();
               }
             } else {
-              // Mobile: pause when out of view
-              if (!entry.isIntersecting) {
-                video.pause();
-              }
+              // Video is out of view
+              setIsInView((prev) => {
+                const newStates = [...prev];
+                newStates[videoIndex] = false;
+                return newStates;
+              });
+
+              // Pause video when out of view
+              video.pause();
             }
           });
         },
         {
-          threshold: 0.15,
-          rootMargin: '-40% 0px -40% 0px',
+          threshold: 0.3, // 30% of video must be visible
+          rootMargin: '-10% 0px -10% 0px', // Slightly smaller margin for better control
         }
       );
 
@@ -78,6 +99,7 @@ const PortfolioPage = () => {
       return () => {
         video.removeEventListener('play', handlePlay);
         video.removeEventListener('pause', handlePause);
+        video.removeEventListener('ended', handleEnded);
       };
     });
 
@@ -143,61 +165,61 @@ const PortfolioPage = () => {
     }
   ];
 
-  // Workflow steps with Dutch descriptions
+  // Workflow steps with Dutch descriptions and video file names
   const workflowSteps = [
     {
       id: 1,
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
-      baseName: "Startvandedag",
+      videoName: "startvandedag",
     },
     {
       id: 2,
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
-      baseName: "Firstlook",
+      videoName: "firstlook",
     },
     {
       id: 3,
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
-      baseName: "Zegja",
+      videoName: "zegja",
     },
     {
       id: 4,
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
-      baseName: "Fotoshoot",
+      videoName: "fotoshoot",
     },
     {
       id: 5,
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
-      baseName: "Geloftes",
+      videoName: "geloftes",
     },
     {
       id: 6,
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
-      baseName: "FamilieVrienden",
+      videoName: "familievrienden",
     },
     {
       id: 7,
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
-      baseName: "Intrede",
+      videoName: "intrede",
     },
     {
       id: 8,
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
-      baseName: "Dessert",
+      videoName: "dessert",
     },
     {
       id: 9,
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
-      baseName: "Openingsdans",
+      videoName: "openingsdans",
     }
   ];
 
@@ -257,14 +279,6 @@ const PortfolioPage = () => {
       location: "Santorini, Greece"
     }
   ];
-
-  const getVideoPath = (baseName: string) => {
-    if (isMobile) {
-      return `/videos/portfolio/${baseName}.mp4`;
-    } else {
-      return `/videos/portfolio/${baseName}.webm`;
-    }
-  };
 
   return (
     <div>
@@ -351,16 +365,19 @@ const PortfolioPage = () => {
                   </div>
 
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
-                    <div className="relative group overflow-hidden">
+                    <div className="relative group overflow-hidden rounded-lg">
                       <div className="aspect-video">
                         <video
                           ref={el => {
                             videoRefs.current[index] = el;
                             if (el) {
                               el.muted = mutedStates[index];
+                              el.loop = true;
                               if (isMobile) {
                                 el.playsInline = true;
                                 el.preload = "metadata";
+                              } else {
+                                el.preload = "auto";
                               }
                             }
                           }}
@@ -368,14 +385,12 @@ const PortfolioPage = () => {
                           muted={mutedStates[index]}
                           preload={isMobile ? "metadata" : "auto"}
                           playsInline
-                          poster={`/images/portfolio/${step.baseName}.webp`}
+                          loop
+                          poster={`/images/portfolio/${step.videoName}.webp`}
                           onClick={() => handleVideoClick(index)}
                         >
-                          {isMobile ? (
-                            <source src={getVideoPath(step.baseName)} type="video/mp4" />
-                          ) : (
-                            <source src={getVideoPath(step.baseName)} type="video/webm" />
-                          )}
+                          <source src={`/videos/portfolio/${step.videoName}.webm`} type="video/webm" />
+                          <source src={`/videos/portfolio/${step.videoName}.mp4`} type="video/mp4" />
                           Your browser does not support the video tag.
                         </video>
                       </div>
@@ -411,6 +426,13 @@ const PortfolioPage = () => {
                           <Volume2 className="w-4 h-4" />
                         )}
                       </button>
+
+                      {/* In view indicator (for debugging) */}
+                      {process.env.NODE_ENV === 'development' && (
+                        <div className="absolute top-4 left-4 z-10 bg-black/60 text-white text-xs px-2 py-1 rounded">
+                          {isInView[index] ? 'In View' : 'Out of View'}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
