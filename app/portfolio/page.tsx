@@ -98,63 +98,54 @@ const PortfolioPage = () => {
       id: 1,
       title: "De start van de dag",
       description: "De eerste zon straalt naar binnen en jullie bereiden je voor op dat bijzondere moment waarop jullie elkaar voor het eerst zullen zien.",
-      thumbnail: "/images/portfolio/Startvandedag.webp",
       baseName: "Startvandedag",
     },
     {
       id: 2,
       title: "First look",
       description: "Het begin van wat beloofd een prachtige dag te worden.",
-      thumbnail: "/images/portfolio/Firstlook.webp",
       baseName: "Firstlook",
     },
     {
       id: 3,
       title: "Zeg 'ja'",
       description: "Omringd door familie en vrienden zeggen jullie met liefde en vol overtuiging 'ja' tegen elkaar.",
-      thumbnail: "/images/portfolio/Zegja.webp",
       baseName: "Zegja",
     },
     {
       id: 4,
       title: "Fotoshoot",
       description: "Jullie twee, in een moment waarin de tijd even stil lijkt te staan.",
-      thumbnail: "/images/portfolio/Fotoshoot.webp",
       baseName: "Fotoshoot",
     },
     {
       id: 5,
       title: "Geloftes",
       description: "Jullie persoonlijke woorden die deze bijzondere dag voor altijd betekenis geven.",
-      thumbnail: "/images/portfolio/Geloftes.webp",
       baseName: "Geloftes",
     },
     {
       id: 6,
       title: "Familie & Vrienden",
       description: "Samen genieten van momenten vol warmte en plezier. Lachen, liefhebben en dicht bij elkaar zijn.",
-      thumbnail: "/images/portfolio/FamilieVrienden.webp",
       baseName: "FamilieVrienden",
     },
     {
       id: 7,
       title: "Entree in de zaal",
       description: "Het sprankelende begin van het feest, klaar om samen te vieren.",
-      thumbnail: "/images/portfolio/Intrede.webp",
       baseName: "Intrede",
     },
     {
       id: 8,
       title: "Dessert",
       description: "Het zoete moment om het avondmaal mee af te sluiten.",
-      thumbnail: "/images/portfolio/Dessert.webp",
       baseName: "Dessert",
     },
     {
       id: 9,
       title: "Openingsdans",
       description: "Jullie eerste dans als getrouwd stel — Samen bewegen op het ritme van jullie geluk, terwijl de wereld even stil lijkt te staan.",
-      thumbnail: "/images/portfolio/Openingsdans.webp",
       baseName: "Openingsdans",
     }
   ];
@@ -306,24 +297,25 @@ const PortfolioPage = () => {
                   {/* Video */}
                   <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}> 
                     <div className="relative group overflow-hidden">
-                      <video
-                        ref={el => {
-                          videoRefs.current[index] = el;
-                          if (el) el.muted = mutedStates[index];
-                        }}
-                        className="w-full h-80 object-cover"
-                        muted={mutedStates[index]}
-                        preload="auto"
-                        poster={step.thumbnail} // Use thumbnail as placeholder
-                        playsInline
-                      >
-                        {isMobile ? (
-                          <source src={getVideoPath(step.baseName)} type="video/mp4" />
-                        ) : (
-                          <source src={getVideoPath(step.baseName)} type="video/webm" />
-                        )}
-                        Your browser does not support the video tag.
-                      </video>
+                      <div className="aspect-video">
+                        <video
+                          ref={el => {
+                            videoRefs.current[index] = el;
+                            if (el) el.muted = mutedStates[index];
+                          }}
+                          className="w-full h-full object-cover"
+                          muted={mutedStates[index]}
+                          preload="auto"
+                          playsInline
+                        >
+                          {isMobile ? (
+                            <source src={getVideoPath(step.baseName)} type="video/mp4" />
+                          ) : (
+                            <source src={getVideoPath(step.baseName)} type="video/webm" />
+                          )}
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
                       {/* Custom volume button */}
                       <button
                         type="button"
