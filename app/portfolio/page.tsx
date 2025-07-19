@@ -11,9 +11,11 @@ const PortfolioPage = () => {
   const [isInView, setIsInView] = useState<boolean[]>(Array(9).fill(false));
 
   useEffect(() => {
-    // Detect mobile devices
+    // Detect mobile devices and tablets
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768 || /Mobi|Android/i.test(navigator.userAgent));
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isTabletOrMobile = window.innerWidth <= 1024 || /Mobi|Android|iPad|iPhone/i.test(navigator.userAgent);
+      setIsMobile(isTouchDevice && isTabletOrMobile);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
