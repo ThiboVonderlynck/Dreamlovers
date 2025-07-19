@@ -34,7 +34,7 @@ const HeroSection = () => {
           <div className="flex justify-center">
             <a 
               href="#showreel" 
-              className="inline-flex items-center bg-white text-black px-8 py-4 font-medium hover:bg-white/90 transition-colors duration-300"
+              className="inline-flex items-center bg-white text-black px-8 py-4 font-medium transition-all duration-300 hover:bg-gray-100 hover:shadow-lg"
             >
               Bekijk onze showreel
             </a>

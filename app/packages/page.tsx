@@ -131,10 +131,10 @@ const PackagesPage = () => {
                     {/* CTA Button */}
                     <Link 
                       href={`/contact?pakket=${encodeURIComponent(pkg.name)}`}
-                      className={`w-full inline-flex items-center justify-center px-8 py-4 rounded-full font-medium ${
+                      className={`w-full inline-flex items-center justify-center px-8 py-4 rounded-full font-medium transition-all duration-300 hover:shadow-lg ${
                         pkg.popular
-                          ? 'bg-gold text-white'
-                          : 'bg-beige text-black'
+                          ? 'bg-gold text-white hover:bg-[#8A7A5A]'
+                          : 'bg-beige text-black hover:bg-[#D4C19A]'
                       }`}
                     >
                       Kies Dit Pakket

@@ -65,35 +65,53 @@ const Navigation = () => {
             className="md:hidden p-2 rounded-md hover:bg-beige/20 transition-colors"
             aria-label="Toggle menu"
           >
-            {isOpen ? (
-              <X className="h-6 w-6 text-black" />
-            ) : (
-              <Menu className="h-6 w-6 text-black" />
-            )}
+            <Menu className="h-6 w-6 text-white" />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden bg-white border-t border-beige/20">
-            <div className="py-4 space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+        {/* Mobile Menu Overlay */}
+        <div 
+          className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden ${
+            isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`} 
+          onClick={() => setIsOpen(false)} 
+        />
+
+        {/* Mobile Menu Panel */}
+        <div className={`fixed top-0 left-0 h-full w-[300px] bg-black text-white z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}>
+          <div className="flex justify-between items-center px-6 py-8 border-b border-gray-700">
+            <Link href="/" className="text-4xl font-dancing font-bold text-white">
+              Dreamlovers
+            </Link>
+            <button 
+              onClick={() => setIsOpen(false)} 
+              className="text-white hover:text-gold transition-colors"
+              aria-label="Close mobile menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          
+          <ul className="flex flex-col">
+            {navItems.map((item) => (
+              <li key={item.name} className="border-b border-gray-700">
+                <Link 
+                  href={item.href} 
+                  onClick={() => setIsOpen(false)} 
+                  className={`text-lg transition-colors px-6 py-3 block ${
                     pathname === item.href
-                      ? 'text-gold bg-beige/20'
-                      : 'text-black hover:text-gold hover:bg-beige/20'
+                      ? 'text-white bg-white/10'
+                      : 'text-white hover:text-gold'
                   }`}
                 >
                   {item.name}
                 </Link>
-              ))}
-            </div>
-          </div>
-        )}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </nav>
   );
