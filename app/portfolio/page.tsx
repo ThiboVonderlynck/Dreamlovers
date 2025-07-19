@@ -368,6 +368,7 @@ const PortfolioPage = () => {
                           muted={mutedStates[index]}
                           preload={isMobile ? "metadata" : "auto"}
                           playsInline
+                          poster={`/images/portfolio/${step.baseName}.webp`}
                           onClick={() => handleVideoClick(index)}
                         >
                           {isMobile ? (
