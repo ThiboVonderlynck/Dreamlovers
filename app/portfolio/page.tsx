@@ -374,7 +374,6 @@ const PortfolioPage = () => {
                         className="w-full aspect-video object-cover"
                         muted={mutedStates[index]}
                         preload="auto"
-                        poster={step.thumbnail} // Use thumbnail as placeholder
                         playsInline
                         onClick={() => isMobile && handlePlayPause(index)}
                       >
