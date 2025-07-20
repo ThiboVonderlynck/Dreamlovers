@@ -25,7 +25,7 @@ const PackagesPage = () => {
     {
       id: 2,
       name: "Standaard",
-      price: "1.900",
+      price: "1.800",
       icon: Star,
       popular: true,
       description: "Ons populairste pakket met uitgebreide dekking",
@@ -44,7 +44,7 @@ const PackagesPage = () => {
     {
       id: 3,
       name: "Exclusief",
-      price: "3.200",
+      price: "3.000",
       icon: Crown,
       popular: false,
       description: "De ultieme trouwfilm ervaring met luxe details",
